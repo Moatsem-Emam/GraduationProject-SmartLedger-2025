@@ -1,0 +1,16 @@
+﻿using SmartLedger.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SmartLedger.Domain.Interfaces.IRepositories
+{
+    public interface ILedgerRepository
+    {
+        Task AddAsync(JournalEntry entry);
+        Task<List<JournalEntry>> GetAllAsync();
+        Task<JournalEntry> GetByIdAsync(int id);
+    }
+}

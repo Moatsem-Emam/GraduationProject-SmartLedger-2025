@@ -1,0 +1,157 @@
+<Page
+    x:Class="SmartLedgerPL.Views.JournalEntry"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmartLedgerPL.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#F3F4F6" Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 🧾 عنوان الصفحة -->
+        <TextBlock Grid.Row="1" Text="📝 إدخال القيد اليومي"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   Foreground="#2C3E50"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20" />
+
+        <!-- ✅ بطاقة الإدخال بالكامل -->
+        <Border Grid.Row="2" Background="White" CornerRadius="16" Padding="20" Margin="0,0,0,20" 
+        BorderBrush="#E5E7EB" BorderThickness="1">
+            <StackPanel Spacing="20">
+
+                <!-- 📂 اختيار الفئة والحساب -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
+                    <ComboBox ItemsSource="{Binding AllCategories}"
+                      SelectedItem="{Binding SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      DisplayMemberPath="CategoryName" 
+                      x:Name="CategoryComboBox" 
+                      Width="220" 
+                      Height="45" 
+                      PlaceholderText=" الفئة" 
+                      Background="#F9FAFB" 
+                      Padding="10" 
+                      CornerRadius="8" 
+                      BorderBrush="#D1D5DB"/>
+
+                    <ComboBox ItemsSource="{Binding AllAccounts}"
+                      SelectedItem="{Binding SelectedAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      DisplayMemberPath="AccountName" 
+                      x:Name="AccountComboBox" 
+                      Width="220" 
+                      Height="45" 
+                      PlaceholderText=" الحساب" 
+                      Background="#F9FAFB" 
+                      Padding="10" 
+                      CornerRadius="8" 
+                      BorderBrush="#D1D5DB"/>
+
+                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                      x:Name="Name" 
+                      Width="180" 
+                      Height="45" 
+                      PlaceholderText=" اليومية" 
+                      Background="#F9FAFB" 
+                      Padding="10" 
+                      CornerRadius="8"
+                      BorderBrush="#D1D5DB"/>
+                </StackPanel>
+
+                <!-- 📝 إدخال بيانات القيد -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
+                    <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     x:Name="Desc" 
+                     Width="180" 
+                     Height="45" 
+                     PlaceholderText=" البيان" 
+                     Background="#F9FAFB" 
+                     Padding="10" 
+                     CornerRadius="8"
+                     BorderBrush="#D1D5DB"/>
+
+                    <TextBox Text="{Binding DebitAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     x:Name="DebitAmount" 
+                     Width="140" 
+                     Height="45" 
+                     PlaceholderText=" مدين" 
+                     Background="#F9FAFB" 
+                     Padding="10" 
+                     CornerRadius="8"
+                     BorderBrush="#D1D5DB"
+                     IsEnabled="{Binding IsDebitEnabled}" />
+
+                    <TextBox Text="{Binding CreditAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     x:Name="CreditAmount" 
+                     Width="140" 
+                     Height="45" 
+                     PlaceholderText=" دائن" 
+                     Background="#F9FAFB" 
+                     Padding="10" 
+                     CornerRadius="8"
+                     BorderBrush="#D1D5DB"
+                     IsEnabled="{Binding IsCreditEnabled}" />
+
+                    <Button Content="➕ إضافة" 
+                    Command="{Binding AddEntryCommand}" 
+                    Width="150" 
+                    Height="45" 
+                    Background="#10B981" 
+                    Foreground="White" 
+                    FontWeight="SemiBold" 
+                    BorderThickness="0" 
+                    CornerRadius="8"
+                    Padding="10,5"
+                  />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+
+        <!-- 📋 جدول القيد -->
+        <Border Grid.Row="3" Background="White" CornerRadius="10" Padding="10" Margin="0,10,0,10" BorderBrush="#D1D5DB" BorderThickness="1">
+            <controls:DataGrid ItemsSource="{Binding JournalEntries}" 
+                               x:Name="EntriesGrid"
+                               AutoGenerateColumns="False"
+                               HeadersVisibility="Column"
+                               GridLinesVisibility="None"
+                               RowHeight="45"
+                               Background="White"
+                               Foreground="#111827"
+                               FontSize="14"
+                               BorderBrush="Transparent"
+                               AlternatingRowBackground="#F3F4F6">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header=" البيان" Binding="{Binding Description}" Width="*" />
+                    <controls:DataGridTextColumn Header="(EGP) مدين" Binding="{Binding DebitAmount}" Width="*" />
+                    <controls:DataGridTextColumn Header="(EGP) دائن" Binding="{Binding CreditAmount}" Width="*" />
+                    <controls:DataGridTextColumn Header=" الحساب" Binding="{Binding AccountName}" Width="*" />
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+        </Border>
+
+        <!-- 💾 زر الحفظ -->
+        <Button Grid.Row="4"
+                Content="💾 حفظ القيد"
+                Command="{Binding SaveCommand}"
+                IsEnabled="{Binding IsSaveEnabled}"
+                Width="160"
+                Height="45"
+                HorizontalAlignment="Right"
+                Background="#10B981"
+                Foreground="White"
+                FontWeight="Bold"
+                BorderThickness="0"
+                Margin="0,0,0,10"/>
+    </Grid>
+</Page>
