@@ -3,13 +3,20 @@ using CommunityToolkit.Mvvm.Input;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.Identity.Client;
+using Microsoft.UI.Xaml.Controls;
+
+using Microsoft.UI.Xaml;
+
 //using Microsoft.VisualStudio.PlatformUI;
 using SmartLedger.Application.DTOs;
 using SmartLedger.Application.Interfaces.IServices;
+using SmartLedger.Domain.Common;
 using SmartLedger.Domain.Entities;
 using SmartLedger.Domain.ValueObjects;
 using SmartLedger.Infrastructure.Services;
 using SmartLedgerPL.Helpers;
+using SmartLedgerPL.Views;
+
 
 //using SmartLedgerPL.Commands;
 using System;
@@ -22,8 +29,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using JournalEntry = SmartLedger.Domain.Entities.JournalEntry;
 
 namespace SmartLedgerPL.ViewModels
 {
@@ -32,9 +41,12 @@ namespace SmartLedgerPL.ViewModels
         private readonly IJournalService _journalService;
         private readonly IAccountService _accountService;
         private readonly ICategoryService _CategoryService;
-
+        private readonly HelperUtilities _helper;
         public IRelayCommand AddEntryCommand { get; }
         public IRelayCommand SaveCommand { get; }
+
+        [ObservableProperty]
+        private static int lineId;
 
         [ObservableProperty]
         private ObservableCollection<JournalEntryDetail> details = new();
@@ -86,16 +98,19 @@ namespace SmartLedgerPL.ViewModels
             IsDebitEnabled = string.IsNullOrWhiteSpace(value);
         }
        
-        public JournalEntryViewModel(IJournalService journalService,IAccountService accountService, ICategoryService categoryService)
+        public JournalEntryViewModel(IJournalService journalService,IAccountService accountService, ICategoryService categoryService, HelperUtilities helper)
         {
+            //App.MainWindow.Activate();
             // Inject Services
             _journalService = journalService;
             _accountService = accountService;
             _CategoryService = categoryService;
+            _helper = helper;
             // Commands
             AddEntryCommand = new AsyncRelayCommand(AddEntryAsync);
             SaveCommand = new RelayCommand(Save);
             Details.CollectionChanged += Details_CollectionChanged;
+            lineId = 0;
             // Clear Context عشان لو فيه حاجة اتضافت بس معملتهاش سيف تشانجس
             ClearJournalEntry();
         }
@@ -131,39 +146,45 @@ namespace SmartLedgerPL.ViewModels
             //if ( !long.TryParse(CreditAmount, out long credit) & !long.TryParse(DebitAmount, out long debit) )
             //{
             //    // Invalid input
-            //    await HelperUtilities.ShowMessageDialogAsync("دخل ارقام صحيحة!", "خطأ");
+            //    await _helper.ShowMessageDialogAsync("دخل ارقام صحيحة!", "خطأ");
             //    return;
             //}
             //else if (credit == 0 && debit == 0) 
             //{
-            //    await HelperUtilities.ShowMessageDialogAsync("لازم تحط قيم للمدين او للدائن علشان تقدر تضيف سطر!", "خطأ");
+            //    await _helper.ShowMessageDialogAsync("لازم تحط قيم للمدين او للدائن علشان تقدر تضيف سطر!", "خطأ");
             //    return;
             //}
             //else if (Description is null)
             //{
-            //    await HelperUtilities.ShowMessageDialogAsync("لازم تحط البيان علشان تقدر تضيف سطر!", "خطأ");
+            //    await _helper.ShowMessageDialogAsync("لازم تحط البيان علشان تقدر تضيف سطر!", "خطأ");
             //    return;
             //} 
             #endregion
 
             MoneyAmount creditAmount, debitAmount;
-            Description description;
+            Inputs<string> name;
+            Inputs<string> description;
+            Inputs<Account> account;
+            Inputs<Category> category;
 
             try
             {
                 creditAmount = new MoneyAmount(CreditAmount);
                 debitAmount = new MoneyAmount(DebitAmount);
-                description = new Description(Description);
+                name = new Inputs<string>(Name, LedgerInputs.Name);
+                description = new Inputs<string>(Description,LedgerInputs.Description);
+                account = new Inputs<Account>(SelectedAccount,LedgerInputs.Account);
+                category = new Inputs<Category>(selectedCategory,LedgerInputs.Category);
             }
             catch (ArgumentException ex)
             {
-                await HelperUtilities.ShowMessageDialogAsync(ex.Message, "خطأ");
+                await _helper.ShowMessageDialogAsync(ex.Message, "خطأ");
                 return;
             }
 
             if (creditAmount.IsZero && debitAmount.IsZero)
             {
-                await HelperUtilities.ShowMessageDialogAsync("لازم تحط قيم للمدين او للدائن علشان تقدر تضيف سطر!", "خطأ");
+                await _helper.ShowMessageDialogAsync("لازم تحط قيم للمدين او للدائن علشان تقدر تضيف سطر!", "خطأ");
                 return;
             }
 
@@ -181,27 +202,34 @@ namespace SmartLedgerPL.ViewModels
 
             var journalEntry = new JournalEntryViewDto
             {
+                LineId = LineId + 5,
                 AccountName = SelectedAccount.AccountName,
                 DebitAmount = debitAmount.Value,
                 CreditAmount = creditAmount.Value,
                 Description = Description
 
             };
+            LineId += 5;
+            
             JournalEntries.Add(journalEntry);
             //OnDetailsChanged(detail);
             // Reset inputs
             DebitAmount = string.Empty;
             CreditAmount = string.Empty;
+            
         }
+
+        public NavigationView NavView => App.MainWindow.NavViewPublic;
+
         private async void Save()
         {
-            bool confirm = await (HelperUtilities.ShowConfirmationDialogAsync("Are You Sure To Save This Journal Entry?",
-                "Save", "Cancel"));
+            bool confirm = await (_helper.ShowConfirmationDialogAsync("متأكد انك عايز تحجز الأموال؟",
+                "حجز", "الغاء"));
             if (confirm)
             {
-
                 var entry = new JournalEntry
                 {
+                    UserId = SessionManager.CurrentUser.Id,
                     Name = Name,
                     Description = Description,
                     CategoryId = SelectedCategory.Id,
@@ -210,12 +238,43 @@ namespace SmartLedgerPL.ViewModels
 
 
                 await _journalService.AddJournalEntryAsync(entry);
-                await _journalService.SaveJournalEntry();
+                try
+                {
+                    await _journalService.SaveJournalEntry();
+                }
+                catch (Exception ex)
+                {
+
+                    await _helper.ShowMessageDialogAsync(ex.Message, " خطأ في حجز الاموال");
+                    return;
+                }
+                await _helper.ShowMessageDialogAsync("تم حجز الأموال بنجاح!", "نجاح");
+
 
                 Details.Clear();
-                journalEntries.Clear();
+                JournalEntries.Clear();
                 Description = string.Empty;
+                Name= string.Empty;
+                SelectedAccount = null;
+                SelectedCategory = null;
                 IsSaveEnabled = false;
+                lineId = 0;
+
+                var frame = App.MainRootFrame;
+                frame.Navigate(typeof(ReportPage));
+
+                // عشان نفوكس علي الحاجة اللي اتنقلنا ليها
+                var item =  NavView.MenuItems
+                           .OfType<NavigationViewItem>()
+                           .FirstOrDefault(i => (string)i.Tag == "ReportPage");
+
+                if (item != null)
+                {
+                    NavView.SelectedItem = item;
+                    item.Focus(FocusState.Programmatic);
+                }
+
+                NavView.SelectedItem = item;
             }
             return;
         }

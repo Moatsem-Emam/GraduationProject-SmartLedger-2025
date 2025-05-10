@@ -15,13 +15,15 @@ namespace SmartLedger.Infrastructure.Repositories
         public ILedgerRepository LedgerRepository { get; }
         public IAccountRepository AccountRepository { get; }
         public ICategoryRepository CategoryRepository { get; }
-
+        public IUserRepository UserRepository { get; }
+        
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
             LedgerRepository = new LedgerRepository(_context);
             AccountRepository = new AccountRepository(_context);
             CategoryRepository = new CategoryRepository(_context);
+            UserRepository = new UserRepository(_context);
         }
 
         public async Task<int> SaveAsync()

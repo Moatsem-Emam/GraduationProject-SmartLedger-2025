@@ -7,6 +7,7 @@ namespace SmartLedger.Infrastructure.Migrations
     /// <inheritdoc />
     public partial class SeedingCategories : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             var now = DateTime.UtcNow;
@@ -16,14 +17,12 @@ namespace SmartLedger.Infrastructure.Migrations
                 columns: new[] { "CategoryName", "CreatedAt" },
                 values: new object[,]
                 {
-            { "Cash", now },
-            { "Categories Receivable", now },
-            { "Inventory", now },
-            { "Prepaid Expenses", now },
-            { "Categories Payable", now },
-            { "Revenue", now },
-            { "Expenses", now },
-            { "Retained Earnings", now }
+    { "تسويات", now },
+    { "صناديق", now },
+    { "العليات", now },
+    { "تسويات صناديق", now },
+    { "تسويات موارد", now },
+    { "موارد ذاتية", now },
                 });
         }
 
@@ -34,16 +33,13 @@ namespace SmartLedger.Infrastructure.Migrations
                 keyColumn: "CategoryName",
                 keyValues: new object[]
                 {
-            "Cash",
-            "Categories Receivable",
-            "Inventory",
-            "Prepaid Expenses",
-            "Categories Payable",
-            "Revenue",
-            "Expenses",
-            "Retained Earnings"
+    "تسويات",
+    "صناديق",
+    "العليات",
+    "تسويات صناديق",
+    "تسويات موارد",
+    "موارد ذاتية",
                 });
         }
-
     }
 }

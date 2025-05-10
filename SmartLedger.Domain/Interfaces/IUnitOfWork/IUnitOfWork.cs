@@ -12,6 +12,7 @@ namespace SmartLedger.Domain.Interfaces.IUnitOfWork
         ILedgerRepository LedgerRepository { get; }
         IAccountRepository AccountRepository { get; }
         ICategoryRepository CategoryRepository { get; }
+        IUserRepository UserRepository { get; }
         Task<int> SaveAsync();
         public void ClearContext();
     }

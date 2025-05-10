@@ -24,20 +24,58 @@ namespace SmartLedger.Infrastructure.Repositories
         {
             _context.JournalEntries.Add(entry);
         }
-       
+
+        public async Task DeleteAsync(long entryId)
+        {
+            var entry = await _context.JournalEntries.FirstOrDefaultAsync(e=>e.Id == entryId);
+            if (entry != null)
+                _context.JournalEntries.Remove(entry);
+            else return;
+        }
+
         public async Task<List<JournalEntry>> GetAllAsync()
         {
             return await _context.JournalEntries
-                .Include(e => e.Details)
+                .Include(e => e.Details).ThenInclude(d=>d.Account).Include(e=>e.Category)
                 .ToListAsync();
         }
-        public async Task<JournalEntry> GetByIdAsync(int id)
+        public async Task<JournalEntry> GetByIdAsync(long id)
         {
             return await _context.JournalEntries
                 .Include(e => e.Details)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
+        public async Task UpdateAsync(JournalEntry entry)
+        {
+            var AttachedEntry = new JournalEntry()
+            {
+                Id = entry.Id,
+                Category = entry.Category,
+                CategoryId = entry.CategoryId,
+                Name = entry.Name,
+                Description = entry.Description,
+                UpdatedAt = DateTime.UtcNow
+            };
 
+            //entry.UpdatedAt = DateTime.UtcNow;
+
+            // Attach the passed entity ONLY IF NOT TRACKED
+            var local = _context.JournalEntries.Local.FirstOrDefault(e => e.Id == entry.Id);
+            if (local != null)
+            {
+                // Detach the existing local instance
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            // Attach and mark properties as modified
+            _context.JournalEntries.Attach(AttachedEntry);
+
+            _context.Entry(AttachedEntry).Property(e => e.Name).IsModified = true;
+            _context.Entry(AttachedEntry).Property(e => e.Description).IsModified = true;
+            //_context.Entry(AttachedEntry).Property(e => e.Category).IsModified = true;
+            _context.Entry(AttachedEntry).Property(e => e.CategoryId).IsModified = true;
+            _context.Entry(AttachedEntry).Property(e => e.UpdatedAt).IsModified = true;
+        }
     }
 }

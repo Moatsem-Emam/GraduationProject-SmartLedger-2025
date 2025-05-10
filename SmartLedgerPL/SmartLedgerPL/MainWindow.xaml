@@ -6,37 +6,37 @@
     xmlns:local="using:SmartLedgerPL"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Smart Ledger"
     mc:Ignorable="d">
-    <NavigationView x:Name="NavView" PaneTitle="LMS" ItemInvoked="NavView_ItemInvoked" IsPaneOpen="False">
+    <NavigationView x:Name="NavView" Loaded="MainWindow_Loaded"
+                    
+                PaneTitle="القائمة"
+                ItemInvoked="NavView_ItemInvoked"
+                IsPaneOpen="False"
+                FlowDirection="RightToLeft"
+                IsBackEnabled="True">
+        
+
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="JournalEntry" Tag="JournalEntry Page">
-                <NavigationViewItem.Icon>
-                    <SymbolIcon Symbol="Library" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-
-            <!--<NavigationViewItem Content="Customers" Tag="Customers Page">➕💾
-                <NavigationViewItem.Icon>
-                    <SymbolIcon Symbol="Contact" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-
-            <NavigationViewItem Content="Loans" Tag="Lending Page">
-                <NavigationViewItem.Icon>
-                    <SymbolIcon Symbol="Shop" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-
-            <NavigationViewItem Content="Reservations" Tag="Reservations Page">
-
-                <NavigationViewItem.Icon>
-                    <SymbolIcon Symbol="Calendar" />
-                </NavigationViewItem.Icon>
-
+            <!-- عنصر رئيسي فيه قائمة فرعية -->
+            <!--<NavigationViewItem Content="القيود اليومية" Icon="Calculator">
+                <NavigationViewItem.MenuItems>
+                    <NavigationViewItem Content="طلب قيد" Tag="RequestPage" Icon="Send" />
+                    <NavigationViewItem Content="الإشعارات" Tag="NotificationsPage" Icon="Message" />
+                </NavigationViewItem.MenuItems>
             </NavigationViewItem>-->
 
+            <!-- عنصر رئيسي عادي -->
+            <NavigationViewItem x:Name="AddJournalEntry" Content="ادخال قيد" Tag="JournalEntryPage" Icon="Edit" />
+            <NavigationViewItem x:Name="Inquiry" Content="الاستعلامات" Tag="ReportPage" Icon="Find" />
+            <NavigationViewItem x:Name="Login" IsEnabled="True" Content="تسجيل الدخول" Tag="LoginPage" Icon="OtherUser" />
+            <NavigationViewItem x:Name="Logout" IsEnabled="False" Content="تسجيل الخروج" Tag="LogoutPage" Icon="Clear" />
         </NavigationView.MenuItems>
 
         <Frame x:Name="ContentFrame" />
     </NavigationView>
+
 </Window>
+
+    
+    

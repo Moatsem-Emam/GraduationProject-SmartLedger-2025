@@ -1,0 +1,231 @@
+<!--<Page
+    x:Class="SmartLedgerPL.Views.ReportPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmartLedgerPL.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d">
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#4316A7" Offset="0"/>
+                <GradientStop Color="SkyBlue" Offset="0.5"/>
+                <GradientStop Color="#0B0B3B" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <TextBlock Grid.Row="1" Text="📊 تقارير القيد اليومي" FontSize="28" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <GridView Grid.Row="2" ItemsSource="{Binding JournalEntries}"
+                  IsItemClickEnabled="True"
+                  ItemClick="GridView_ItemClick"
+                  SelectionMode="None">
+
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+
+            --><!-- زر إضافة قيد ككارت -->
+            <!--<Border Grid.Row="2" Background="White" CornerRadius="12" Margin="8" Padding="12"
+        BorderBrush="#DDD" BorderThickness="1" Width="200" Height="150"
+        HorizontalAlignment="Left">
+                <Button Click="AddEntryButton_Click" Background="Transparent" BorderThickness="0">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE710;" FontSize="36" Foreground="#333"/>
+                        <TextBlock Text="إضافة قيد جديد" FontSize="16" FontWeight="SemiBold" Foreground="#333" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Button>
+            </Border>--><!--
+            
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="White" CornerRadius="12" Margin="8" Padding="12" 
+            BorderBrush="#DDD" BorderThickness="1">
+                        <Grid Width="200" Height="150">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            
+                            
+                            --><!-- Actions (Edit & Delete) next to each other --><!--
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Button Width="30" Height="30" Click="EditButton_Click"
+                                        Background="Transparent" BorderThickness="0"
+                                        Tag="{Binding}" ToolTipService.ToolTip="تعديل">
+                                    <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="#333"/>
+                                </Button>
+                                <Button Width="50" Height="50"
+                                        Background="Transparent" BorderThickness="0"
+                                        Tag="{Binding}" ToolTipService.ToolTip="حذف">
+                                    <FontIcon Glyph="&#xE74D;" FontSize="16" Foreground="#333"/>
+                                </Button>
+                            </StackPanel>
+
+
+                            --><!-- Card content --><!--
+                            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="SemiBold" Foreground="#333"/>
+                                <TextBlock Text="{Binding CategoryName}" FontSize="17" FontWeight="SemiBold" Foreground="#444"/>
+                                <TextBlock Text="{Binding FormattedDate}" 
+                                           FontSize="14" Foreground="#666" Margin="0,6,0,0"/>
+                            </StackPanel>
+
+                            --><!--<StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Width="500" Height="500"
+                                        Background="Transparent" BorderThickness="0"
+                                        Tag="{Binding}" ToolTipService.ToolTip="اضافة قيد">
+                                    <FontIcon Glyph="&#xE710;" FontSize="18" Foreground="#333"/>
+                                </Button>
+                            </StackPanel>--><!--
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+
+            </GridView.ItemTemplate>
+        </GridView>
+        
+       
+
+
+        --><!-- Empty state (optional) --><!--
+        <TextBlock Text="لا توجد تقارير حالياً" 
+                   Visibility="{Binding JournalEntries.Count}" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Gray"/>--><!--
+
+    </Grid>
+</Page>-->
+
+
+
+<Page
+    x:Class="SmartLedgerPL.Views.ReportPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmartLedgerPL.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:viewmodels="using:SmartLedgerPL.ViewModels" xmlns:helpers="using:SmartLedgerPL.Helpers"
+    xmlns:converters="using:SmartLedgerPL.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        
+        <!-- كارت "إضافة قيد" -->
+        <DataTemplate x:Key="AddNewCardTemplate">
+            <Border Background="Wheat" CornerRadius="12" Margin="8" Padding="12">
+                <Button Click="AddEntry_Click" Background="Transparent" BorderThickness="0" Width="200" Height="150">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE710;" FontSize="30" Foreground="DarkSlateGray"/>
+                        <TextBlock Text="إضافة قيد جديد" FontSize="16" FontWeight="Bold" Foreground="#333" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Border>
+        </DataTemplate>
+
+        <!-- كارت القيد العادي -->
+        <DataTemplate x:Key="JournalEntryTemplate">
+            <Border Background="White" CornerRadius="12" Margin="8" Padding="12" BorderBrush="#DDD" BorderThickness="1">
+                <Grid Width="200" Height="150">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- تعديل -->
+                    <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Width="50" Height="50" Click="EditButton_Click"
+                            Background="Transparent" BorderThickness="0"
+                            Tag="{Binding}" ToolTipService.ToolTip="تعديل">
+                        <FontIcon Glyph="&#xE70F;" FontSize="18" Foreground="#333"/>
+                    </Button>
+
+                    <!-- حذف -->
+                    <Button Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Width="50" Height="50" Click="DeleteButton_Click"
+                            Background="Transparent" BorderThickness="0"
+                            Tag="{Binding}" ToolTipService.ToolTip="حذف">
+                        <FontIcon Glyph="&#xE74D;" FontSize="18" Foreground="#333"/>
+                    </Button>
+
+                    <!-- محتوى الكارت -->
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="SemiBold" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding CategoryName}" FontSize="17" FontWeight="SemiBold" Foreground="#444" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding FormattedDate}" FontSize="14" Foreground="#666" Margin="0,6,0,0" TextAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <!-- TemplateSelector -->
+        <helpers:JournalEntryTemplateSelector x:Key="JournalEntryTemplateSelector"
+                                            AddCardTemplate="{StaticResource AddNewCardTemplate}"
+                                            EntryCardTemplate="{StaticResource JournalEntryTemplate}"/>
+    </Page.Resources>
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#4316A7" Offset="0"/>
+                <GradientStop Color="SkyBlue" Offset="0.5"/>
+                <GradientStop Color="#0B0B3B" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <TextBlock Grid.Row="0" Text="📊 تقارير القيد اليومي"
+                   FontSize="28" FontWeight="Bold"
+                   Foreground="Black" HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+        <GridView Grid.Row="2"
+                  ItemsSource="{Binding JournalEntries}"
+                  IsItemClickEnabled="True"
+                  ItemClick="GridView_ItemClick"
+                  ItemTemplateSelector="{StaticResource JournalEntryTemplateSelector}"
+                  SelectionMode="None"
+                  HorizontalAlignment="Center">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+        </GridView>
+
+        <Grid Background="#88000000"
+          Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ProgressRing IsActive="True" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        
+    </Grid>
+</Page>
+

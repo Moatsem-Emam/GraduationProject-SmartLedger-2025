@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SmartLedgerPL.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmartLedgerPL.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="using:SmartLedgerPL.Helpers"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid  FlowDirection="LeftToRight" Loaded="RootGrid_Loaded" x:Name="RootGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#4316A7" Offset="0"/>
+                <GradientStop Color="DeepSkyBlue" Offset="0.5"/>
+                <GradientStop Color="#0B0B3B" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
+        <!-- Login Card -->
+        <Border x:Name="LoginCard" Width="400" Height="600" Padding="10" Background="White" CornerRadius="12"
+            HorizontalAlignment="Center" VerticalAlignment="Center" Translation="0,0,32" >
+            <Border.Shadow>
+                <ThemeShadow />
+            </Border.Shadow>
+
+            <StackPanel Background="Transparent" Padding="40" Margin="10" VerticalAlignment="Center">
+                <Ellipse Width="100" Height="100" Margin="0,0,0,40">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="ms-appx:///Assets/Images/SmartLedger_Light.png" />
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <TextBlock x:Name="WelcomeText" Text="Welcome back !" FontSize="24" FontWeight="Bold" Margin="0,0,0,25">
+                    <TextBlock.RenderTransform>
+                        <TranslateTransform X="-200" />
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Email" FontSize="16" Margin="2"/>
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE77B;" Margin="2"/>
+                        <TextBox x:Name="EmailTextBox" Text="{Binding Email, Mode=TwoWay}"  CornerRadius="5" PlaceholderText="Enter your email address" Width="256"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Password" FontSize="16" Margin="2"/>
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE72E;" Margin="2"/>
+                        <PasswordBox Password="{Binding Password, Mode=TwoWay}" x:Name="PasswordBox" helpers:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" CornerRadius="5" PlaceholderText="Enter your password" Width="256"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--<StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="RememberMeCheckBox" Content="Remember Me"  />
+                    <HyperlinkButton Content="Forgot Password?" Margin="40,0,0,0"/>
+                </StackPanel>-->
+
+                <Button Content="Log In" Command="{Binding LoginCommand}" Background="DeepSkyBlue" Foreground="White"
+                    Margin="0,10,0,10" Height="40" CornerRadius="15" HorizontalAlignment="Stretch" />
+
+                <!--<RichTextBlock>
+                    <Paragraph>
+                        <Hyperlink Click="GoToRegisterPage_Click">
+                            <Span>
+                                <Run Text="Don't have an account? "/>
+                                <Run Text="CREATE ONE NOW" Foreground="Red"/>
+                            </Span>
+                        </Hyperlink>
+                    </Paragraph>
+                </RichTextBlock>-->
+            </StackPanel>
+        </Border>
+
+        <!-- Right side illustration -->
+        <Grid Grid.Column="1">
+            <Image Source="/Assets/Images/Work in progress-rafiki.png"/>
+        </Grid>
+    </Grid>
+</Page>

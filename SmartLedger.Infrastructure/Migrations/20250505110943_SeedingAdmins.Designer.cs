@@ -12,8 +12,8 @@ using SmartLedger.Infrastructure.Data;
 namespace SmartLedger.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250502132926_SeedingAccounts")]
-    partial class SeedingAccounts
+    [Migration("20250505110943_SeedingAdmins")]
+    partial class SeedingAdmins
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,11 +50,11 @@ namespace SmartLedger.Infrastructure.Migrations
 
             modelBuilder.Entity("SmartLedger.Domain.Entities.Category", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
@@ -79,8 +79,8 @@ namespace SmartLedger.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -96,9 +96,14 @@ namespace SmartLedger.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("JournalEntries");
                 });
@@ -138,6 +143,37 @@ namespace SmartLedger.Infrastructure.Migrations
                     b.ToTable("JournalEntryDetails");
                 });
 
+            modelBuilder.Entity("SmartLedger.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("SmartLedger.Domain.Entities.JournalEntry", b =>
                 {
                     b.HasOne("SmartLedger.Domain.Entities.Category", "Category")
@@ -146,7 +182,15 @@ namespace SmartLedger.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SmartLedger.Domain.Entities.User", "User")
+                        .WithMany("JournalEntries")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SmartLedger.Domain.Entities.JournalEntryDetail", b =>
@@ -181,6 +225,11 @@ namespace SmartLedger.Infrastructure.Migrations
             modelBuilder.Entity("SmartLedger.Domain.Entities.JournalEntry", b =>
                 {
                     b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("SmartLedger.Domain.Entities.User", b =>
+                {
+                    b.Navigation("JournalEntries");
                 });
 #pragma warning restore 612, 618
         }

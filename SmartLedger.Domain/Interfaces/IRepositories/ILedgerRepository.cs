@@ -10,7 +10,9 @@ namespace SmartLedger.Domain.Interfaces.IRepositories
     public interface ILedgerRepository
     {
         Task AddAsync(JournalEntry entry);
+        Task UpdateAsync(JournalEntry entry);
+        Task DeleteAsync(long entryId);
         Task<List<JournalEntry>> GetAllAsync();
-        Task<JournalEntry> GetByIdAsync(int id);
+        Task<JournalEntry> GetByIdAsync(long id);
     }
 }

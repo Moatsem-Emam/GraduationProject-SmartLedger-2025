@@ -10,7 +10,7 @@ namespace SmartLedger.Application.Interfaces.IDTOs
     {
         long AccountId { get; set; }
         public string AccountName { get; set; } 
-        decimal DebitAmount { get; set; }
-        decimal CreditAmount { get; set; }
+        long DebitAmount { get; set; }
+        long CreditAmount { get; set; }
     }
 }

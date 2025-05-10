@@ -17,14 +17,14 @@ namespace SmartLedger.Infrastructure.Migrations
                 columns: new[] { "AccountName", "CreatedAt" },
                 values: new object[,]
                 {
-            { "Cash", now },
-            { "Accounts Receivable", now },
-            { "Inventory", now },
-            { "Prepaid Expenses", now },
-            { "Accounts Payable", now },
-            { "Revenue", now },
-            { "Expenses", now },
-            { "Retained Earnings", now }
+     { "Cash", now },
+     { "Accounts Receivable", now },
+     { "Inventory", now },
+     { "Prepaid Expenses", now },
+     { "Accounts Payable", now },
+     { "Revenue", now },
+     { "Expenses", now },
+     { "Retained Earnings", now }
                 });
         }
 
@@ -35,16 +35,15 @@ namespace SmartLedger.Infrastructure.Migrations
                 keyColumn: "AccountName",
                 keyValues: new object[]
                 {
-            "Cash",
-            "Accounts Receivable",
-            "Inventory",
-            "Prepaid Expenses",
-            "Accounts Payable",
-            "Revenue",
-            "Expenses",
-            "Retained Earnings"
+     "Cash",
+     "Accounts Receivable",
+     "Inventory",
+     "Prepaid Expenses",
+     "Accounts Payable",
+     "Revenue",
+     "Expenses",
+     "Retained Earnings"
                 });
         }
-
     }
 }

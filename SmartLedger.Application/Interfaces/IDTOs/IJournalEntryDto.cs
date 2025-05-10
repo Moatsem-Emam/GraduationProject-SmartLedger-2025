@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace SmartLedger.Application.Interfaces.IDTOs
 {
-    internal interface IJournalEntryDto
+    public interface IJournalEntryDto
     {
+        public string Name { get; set; }
+
+        public string CategoryName { get; set; }
+        
+        public string FormattedDate { get; set; }
     }
 }

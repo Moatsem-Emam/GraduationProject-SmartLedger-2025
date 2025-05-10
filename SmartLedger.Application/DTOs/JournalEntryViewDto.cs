@@ -9,10 +9,10 @@ namespace SmartLedger.Application.DTOs
 {
     public class JournalEntryViewDto : IJournalEntryDetailDto,IJournalEntryDescDto
     {
-        
+        public int LineId { get; set; }
         public long AccountId { get; set; }
-        public decimal DebitAmount { get; set; }
-        public decimal CreditAmount { get; set; }
+        public long DebitAmount { get; set; }
+        public long CreditAmount { get; set; }
         public string Description { get; set; } = string.Empty;
         public string AccountName { get ; set; }
     }

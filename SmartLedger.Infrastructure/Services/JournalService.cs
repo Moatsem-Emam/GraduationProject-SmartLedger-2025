@@ -26,23 +26,24 @@ namespace SmartLedger.Infrastructure.Services
             
         }
 
-        public async Task<List<JournalEntryDto>> GetAllJournalEntriesAsync()
+        public async Task<List<JournalEntry>> GetAllJournalEntriesAsync()
         {
-            var entries = await _unitOfWork.LedgerRepository.GetAllAsync();
-            return entries.Select(e => new JournalEntryDto
-            {
-                CreatedAt = e.CreatedAt,
-                Description = e.Description,
-                Details = e.Details.Select(d => new JournalEntryDetailDto
-                {
-                    AccountId = d.AccountId,
-                    DebitAmount = d.DebitAmount,
-                    CreditAmount = d.CreditAmount
-                }).ToList()
-            }).ToList();
+           return await _unitOfWork.LedgerRepository.GetAllAsync();
+            //return entries
+            //    .Select(e => new JournalEntryDto
+            //{
+            //    CreatedAt = e.CreatedAt,
+            //    Description = e.Description,
+            //    Details = e.Details.Select(d => new JournalEntryDetailDto
+            //    {
+            //        AccountId = d.AccountId,
+            //        DebitAmount = d.DebitAmount,
+            //        CreditAmount = d.CreditAmount
+            //    }).ToList()
+            //}).ToList();
         }
 
-        public async Task<JournalEntry> GetJournalEntryByIdAsync(int entryId)
+        public async Task<JournalEntry> GetJournalEntryByIdAsync(long entryId)
         {
             return await _unitOfWork.LedgerRepository.GetByIdAsync(entryId);
 
@@ -55,6 +56,16 @@ namespace SmartLedger.Infrastructure.Services
         public void ClearJournalEntry()
         {
             _unitOfWork.ClearContext();
+        }
+
+        public async Task UpdateJournalEntryAsync(JournalEntry entryIn)
+        {
+            await _unitOfWork.LedgerRepository.UpdateAsync(entryIn);
+        }
+
+        public async Task DeleteJournalEntryAsync(long entryId)
+        {
+            await _unitOfWork.LedgerRepository.DeleteAsync(entryId);
         }
     }
 }

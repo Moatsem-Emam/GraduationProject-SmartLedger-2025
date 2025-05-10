@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SmartLedger.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace SmartLedger.Application.Interfaces.IAppDb
         DbSet<JournalEntryDetail> JournalEntryDetails { get; }
         DbSet<Account> Accounts { get; }
         DbSet<Category> Categories { get; }
+        DbSet<User> Users { get; }
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
     }

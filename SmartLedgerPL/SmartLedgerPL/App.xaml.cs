@@ -18,7 +18,10 @@ using SmartLedger.Domain.Interfaces.IUnitOfWork;
 using SmartLedger.Infrastructure.Data;
 using SmartLedger.Infrastructure.Repositories;
 using SmartLedger.Infrastructure.Services;
+using SmartLedgerPL.Helpers;
+using SmartLedgerPL.UiServices;
 using SmartLedgerPL.ViewModels;
+using SmartLedgerPL.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,6 +46,8 @@ namespace SmartLedgerPL
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        public static Frame MainRootFrame => MainWindow.ContentFramePublic;
+        private readonly HelperUtilities _helper;
         public static IHost AppHost { get; private set; }
         public static IServiceProvider Services => AppHost.Services;
         public IConfiguration Configuration { get; }
@@ -59,7 +64,10 @@ namespace SmartLedgerPL
                     ConfigureServices(context.Configuration, services);
                 })
                 .Build();
-            
+
+            // ✅ Resolve the HelperUtilities manually from DI
+            _helper = AppHost.Services.GetRequiredService<HelperUtilities>();
+
             InitializeComponent();
         }
 
@@ -74,14 +82,22 @@ namespace SmartLedgerPL
             services.AddScoped<ILedgerRepository, LedgerRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             // Services
             services.AddScoped<IJournalService, JournalService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<HelperUtilities>();
+
             // Database Connection Establishing
             services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
             // View Models
             services.AddTransient<JournalEntryViewModel>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<ReportPageViewModel>();
+            services.AddTransient<ReportExportPdfViewModel>();
             // Auto Mapper
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
@@ -89,15 +105,29 @@ namespace SmartLedgerPL
         }
 
         public static MainWindow MainWindow { get; private set; } // Store main window reference
+                                                                  // أضف هذا السطر داخل الكلاس MainWindow
+
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
+
+        public NavigationView NavView => MainWindow.NavViewPublic;
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            MainWindow = new MainWindow(); // Set global reference
+            MainWindow = new MainWindow();
             MainWindow.Activate();
+
+            // ✅ التنقل لأول مرة 
+            MainWindow.ContentFramePublic.Navigate(typeof(LoginPage));
+            // عشان نفوكس علي الحاجة اللي اتنقلنا ليها
+            _helper.FocusOn("LoginPage");
+
+            // ✅ تنفيذ تحديث الـ NavigationView حسب الدور
+            //_ = MainWindow.UpdateNavViewByRoleAsync();
         }
+
+
 
         //private Window m_window;
     }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartLedger.Domain.BaseEntity
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<T>
     {
-        public long Id { get; set; }
+        public T Id { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
     }

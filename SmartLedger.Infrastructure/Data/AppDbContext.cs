@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SmartLedger.Application.Interfaces.IAppDb;
 using SmartLedger.Domain.Entities;
 using SmartLedger.Infrastructure.Config;
@@ -17,11 +18,17 @@ namespace SmartLedger.Infrastructure.Data
 
         public DbSet<Category> Categories => Set<Category>();
 
+        public DbSet<User> Users => Set<User>();
+
+        public EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
+       => base.Entry(entity);
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new JournalEntryConfiguration());
             modelBuilder.ApplyConfiguration(new AccountConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfigurations());
         }
     }
 }
