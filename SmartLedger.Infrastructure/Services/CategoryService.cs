@@ -25,7 +25,7 @@ namespace SmartLedger.Infrastructure.Services
         }
         public async Task<List<Category>> GetAllCategorysAsync()
         {
-            var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+            var categories = await _unitOfWork.CategoryRepository.GetAllPaginatedAsync();
             return categories;
         }
         public async Task<Category?> GetCategoryByIdAsync(int CategoryId)

@@ -19,53 +19,52 @@ namespace SmartLedger.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task AddJournalEntryAsync(JournalEntry entryIn)
+        public async Task AddEntryAsync(JournalEntry entryIn)
         {
             await _unitOfWork.LedgerRepository.AddAsync(entryIn);
             //await _unitOfWork.SaveAsync();
             
         }
 
-        public async Task<List<JournalEntry>> GetAllJournalEntriesAsync()
+        public async Task<List<JournalEntry>> GetAllPaginatedEntriesAsync(int pageNumber)
         {
-           return await _unitOfWork.LedgerRepository.GetAllAsync();
-            //return entries
-            //    .Select(e => new JournalEntryDto
-            //{
-            //    CreatedAt = e.CreatedAt,
-            //    Description = e.Description,
-            //    Details = e.Details.Select(d => new JournalEntryDetailDto
-            //    {
-            //        AccountId = d.AccountId,
-            //        DebitAmount = d.DebitAmount,
-            //        CreditAmount = d.CreditAmount
-            //    }).ToList()
-            //}).ToList();
+           return await _unitOfWork.LedgerRepository.GetAllPaginatedAsync(pageNumber);
+            
+        }
+        public async Task<int> GetCountEntriesAsync()
+        {
+            return await _unitOfWork.LedgerRepository.GetCountAsync();
         }
 
-        public async Task<JournalEntry> GetJournalEntryByIdAsync(long entryId)
+        public async Task<JournalEntry> GetEntryByIdAsync(long entryId)
         {
             return await _unitOfWork.LedgerRepository.GetByIdAsync(entryId);
 
         }
 
-        public async Task SaveJournalEntry()
+        public async Task SaveEntry()
         {
             await _unitOfWork.SaveAsync();
         }
-        public void ClearJournalEntry()
+        public void ClearEntry()
         {
             _unitOfWork.ClearContext();
         }
 
-        public async Task UpdateJournalEntryAsync(JournalEntry entryIn)
+        public async Task UpdateEntryAsync(JournalEntry entryIn)
         {
             await _unitOfWork.LedgerRepository.UpdateAsync(entryIn);
         }
 
-        public async Task DeleteJournalEntryAsync(long entryId)
+        public async Task DeleteEntryAsync(long entryId)
         {
             await _unitOfWork.LedgerRepository.DeleteAsync(entryId);
+        }
+
+        public async Task<List<JournalEntry>> GetAllEntriesAsync()
+        {
+            return await _unitOfWork.LedgerRepository.GetAllAsync();
+
         }
     }
 }

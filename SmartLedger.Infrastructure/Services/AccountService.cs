@@ -18,7 +18,7 @@ namespace SmartLedger.Infrastructure.Services
         }
         public async Task<List<Account>> GetAllAccountsAsync()
         {
-            var accounts = await _unitOfWork.AccountRepository.GetAllAsync();
+            var accounts = await _unitOfWork.AccountRepository.GetAllPaginatedAsync();
             return accounts;
             //return accounts.Select(a => new Account
             //{

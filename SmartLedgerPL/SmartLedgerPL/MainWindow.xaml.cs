@@ -128,7 +128,10 @@ namespace SmartLedgerPL
             // تحقق إذا كان يمكن الرجوع في الـ Frame
             if (ContentFrame.CanGoBack)
             {
+                var tag = ContentFrame.BackStack.LastOrDefault().SourcePageType.Name;
                 ContentFrame.GoBack();
+                // عشان نفوكس علي الحاجة اللي اتنقلنا ليها
+                _helper.FocusOn(tag);
             }
         }
     }

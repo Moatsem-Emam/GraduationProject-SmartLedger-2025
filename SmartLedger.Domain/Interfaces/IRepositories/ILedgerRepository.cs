@@ -12,7 +12,9 @@ namespace SmartLedger.Domain.Interfaces.IRepositories
         Task AddAsync(JournalEntry entry);
         Task UpdateAsync(JournalEntry entry);
         Task DeleteAsync(long entryId);
+        Task<List<JournalEntry>> GetAllPaginatedAsync(int pageNumber);
         Task<List<JournalEntry>> GetAllAsync();
+        Task<int> GetCountAsync();
         Task<JournalEntry> GetByIdAsync(long id);
     }
 }

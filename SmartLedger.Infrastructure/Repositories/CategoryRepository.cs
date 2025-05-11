@@ -20,7 +20,7 @@ namespace SmartLedger.Infrastructure.Repositories
               _context.Categories.Add(category);
         }
 
-        public async Task<List<Category>> GetAllAsync()
+        public async Task<List<Category>> GetAllPaginatedAsync()
         {
             return await _context.Categories
                 .Include(c=>c.JournalEntries)

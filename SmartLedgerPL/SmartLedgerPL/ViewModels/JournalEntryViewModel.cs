@@ -112,7 +112,7 @@ namespace SmartLedgerPL.ViewModels
             Details.CollectionChanged += Details_CollectionChanged;
             lineId = 0;
             // Clear Context عشان لو فيه حاجة اتضافت بس معملتهاش سيف تشانجس
-            ClearJournalEntry();
+            ClearEntry();
         }
         // Event Handler On Details Changes
         private void Details_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -135,9 +135,9 @@ namespace SmartLedgerPL.ViewModels
             IsSaveEnabled = sumCredit == sumDebit;
         }
 
-        private void ClearJournalEntry()
+        private void ClearEntry()
         {
-            _journalService.ClearJournalEntry();
+            _journalService.ClearEntry();
         }
         private async Task AddEntryAsync()
         {
@@ -223,6 +223,7 @@ namespace SmartLedgerPL.ViewModels
 
         private async void Save()
         {
+            IsSaveEnabled = false;
             bool confirm = await (_helper.ShowConfirmationDialogAsync("متأكد انك عايز تحجز الأموال؟",
                 "حجز", "الغاء"));
             if (confirm)
@@ -237,10 +238,11 @@ namespace SmartLedgerPL.ViewModels
                 };
 
 
-                await _journalService.AddJournalEntryAsync(entry);
+                await _journalService.AddEntryAsync(entry);
                 try
                 {
-                    await _journalService.SaveJournalEntry();
+                    await _journalService.SaveEntry();
+                    await _helper.ShowMessageDialogAsync("تم حجز الأموال بنجاح!", "نجاح");
                 }
                 catch (Exception ex)
                 {
@@ -248,7 +250,6 @@ namespace SmartLedgerPL.ViewModels
                     await _helper.ShowMessageDialogAsync(ex.Message, " خطأ في حجز الاموال");
                     return;
                 }
-                await _helper.ShowMessageDialogAsync("تم حجز الأموال بنجاح!", "نجاح");
 
 
                 Details.Clear();

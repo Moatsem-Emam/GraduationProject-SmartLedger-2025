@@ -10,13 +10,15 @@ namespace SmartLedger.Application.Interfaces.IServices
 {
     public interface IJournalService
     {
-        Task AddJournalEntryAsync(JournalEntry entryIn);
-        Task UpdateJournalEntryAsync(JournalEntry entryIn);
-        Task DeleteJournalEntryAsync(long entryId);
-        Task<List<JournalEntry>> GetAllJournalEntriesAsync();
-        Task<JournalEntry?> GetJournalEntryByIdAsync(long entryId);
-        Task SaveJournalEntry();
-        public void ClearJournalEntry();
+        Task AddEntryAsync(JournalEntry entryIn);
+        Task UpdateEntryAsync(JournalEntry entryIn);
+        Task DeleteEntryAsync(long entryId);
+        Task<List<JournalEntry>> GetAllPaginatedEntriesAsync(int pageNumber);
+        Task<List<JournalEntry>> GetAllEntriesAsync();
+        Task<int> GetCountEntriesAsync();
+        Task<JournalEntry?> GetEntryByIdAsync(long entryId);
+        Task SaveEntry();
+        public void ClearEntry();
 
     }
 }

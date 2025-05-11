@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using SmartLedger.Application.Interfaces.IAppDb;
 using SmartLedger.Domain.Entities;
 using SmartLedger.Domain.Interfaces.IRepositories;
@@ -33,12 +34,26 @@ namespace SmartLedger.Infrastructure.Repositories
             else return;
         }
 
-        public async Task<List<JournalEntry>> GetAllAsync()
+        public async Task<List<JournalEntry>> GetAllPaginatedAsync(int pageNumber)
         {
+
             return await _context.JournalEntries
-                .Include(e => e.Details).ThenInclude(d=>d.Account).Include(e=>e.Category)
+                .Include(e => e.Details)
+                    .ThenInclude(d => d.Account)
+                .Include(e => e.Category)
+                .OrderByDescending(e => e.CreatedAt)
+                .ThenByDescending(e => e.UpdatedAt)
+                .Skip((pageNumber - 1) * (19))
+                .Take(19)
                 .ToListAsync();
         }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.JournalEntries.CountAsync();
+
+        }
+
         public async Task<JournalEntry> GetByIdAsync(long id)
         {
             return await _context.JournalEntries
@@ -77,5 +92,17 @@ namespace SmartLedger.Infrastructure.Repositories
             _context.Entry(AttachedEntry).Property(e => e.CategoryId).IsModified = true;
             _context.Entry(AttachedEntry).Property(e => e.UpdatedAt).IsModified = true;
         }
+
+        public async Task<List<JournalEntry>> GetAllAsync()
+        {
+            return await _context.JournalEntries
+                .Include(e => e.Details)
+                    .ThenInclude(d => d.Account)
+                .Include(e => e.Category)
+                .OrderByDescending(e => e.CreatedAt)
+                .ThenByDescending(e => e.UpdatedAt)
+                .ToListAsync();
+        }
     }
 }
+//await _context.JournalEntries.CountAsync() / 15

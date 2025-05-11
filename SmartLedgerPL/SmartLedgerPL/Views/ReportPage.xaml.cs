@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -32,6 +34,11 @@ namespace SmartLedgerPL.Views
 
         private readonly HelperUtilities _helper;
         public NavigationView NavView => App.MainWindow.NavViewPublic;
+
+        private int _currentPage = 1;
+        private int _pageSize = 19;
+        private int _totalPages;
+
         public ReportPage()
         {
             this.InitializeComponent();
@@ -43,15 +50,12 @@ namespace SmartLedgerPL.Views
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //if (e.ClickedItem is JournalEntry entry)
-            //{
-            //}
 
             if (e.ClickedItem is JournalEntryDto entry && entry.Details is null) return;
-           
+
             var vm = DataContext as ReportPageViewModel;
-                vm?.NavigateToDetailsCommand.Execute(e.ClickedItem);
-        }   
+            vm?.NavigateToDetailsCommand.Execute(e.ClickedItem);
+        }
         private void AddEntry_Click(object sender, RoutedEventArgs e)
         {
             // انتقل لصفحة إنشاء قيد جديد أو افتح Dialog
@@ -81,12 +85,74 @@ namespace SmartLedgerPL.Views
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+
             base.OnNavigatedTo(e);
             if (DataContext is ReportPageViewModel vm)
             {
-                vm.LoadDataCommand.Execute(null);
+                int totalCount = await ViewModel._journalService.GetCountEntriesAsync();
+                _totalPages = (int)Math.Ceiling((double)totalCount / _pageSize);
+                vm.LoadDataCommand.Execute(_currentPage);
+                UpdatePaginationButtons();
+            }
+            //await InitializePaginationAsync();
+        }
+        private async void NextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentPage < _totalPages)
+            {
+                _currentPage++;
+                await ViewModel.LoadPaginatedEntriesAsync(_currentPage);
+                UpdatePaginationButtons();
+            }
+        }
+
+        private async void PreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentPage > 1)
+            {
+                _currentPage--;
+                await ViewModel.LoadPaginatedEntriesAsync(_currentPage);
+                UpdatePaginationButtons();
+            }
+        }
+
+        private void UpdatePaginationButtons()
+        {
+            prev.IsEnabled = _currentPage > 1;
+            next.IsEnabled = _currentPage < _totalPages;
+        }
+
+        //private async void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    if (DataContext is ReportPageViewModel viewModel)
+        //    {
+        //        viewModel.SearchText = SearchBox.Text;
+        //        await viewModel.FilterEntriesAsync();
+        //    }
+        //}
+
+        private CancellationTokenSource _cts;
+
+        private async void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
+            try
+            {
+                await Task.Delay(300, _cts.Token); // 300ms delay
+                if (DataContext is ReportPageViewModel viewModel)
+                {
+                    viewModel.SearchText = SearchBox.Text;
+                    await viewModel.FilterEntriesAsync();
+                }
+            }
+            
+            catch (TaskCanceledException) { /* Ignored */ }
+            finally
+            {
+                UpdatePaginationButtons();
             }
         }
 

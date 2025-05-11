@@ -24,7 +24,7 @@ namespace SmartLedger.Infrastructure.Repositories
             _context.Accounts.Add(account);
         }
 
-        public async Task<List<Account>> GetAllAsync()
+        public async Task<List<Account>> GetAllPaginatedAsync()
         {
             return await _context.Accounts
                 .Include(a => a.Details)
