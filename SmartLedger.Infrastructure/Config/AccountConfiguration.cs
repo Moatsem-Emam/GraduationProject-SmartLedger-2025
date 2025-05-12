@@ -9,9 +9,15 @@ namespace SmartLedger.Infrastructure.Config
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
+            // Configure the primary key to not be auto-generated
+            builder.Property(a => a.Id)
+                   .ValueGeneratedNever();
+
+            // Configure the one-to-many relationship
             builder.HasMany(a => a.Details)
                    .WithOne(d => d.Account)
                    .HasForeignKey(d => d.AccountId);
+
         }
     }
 

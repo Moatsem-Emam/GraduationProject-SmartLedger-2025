@@ -6,15 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"  
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    FlowDirection="RightToLeft">
 
-    <Grid Padding="20">
-        <!--<Grid.Background>
+    <Grid Padding="30">
+        <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#F5F7FA" Offset="0"/>
-                <GradientStop Color="#E4EBF5" Offset="1"/>
+                <GradientStop Color="#2A0A73" Offset="0"/>
+                <GradientStop Color="#4A90E2" Offset="0.5"/>
+                <GradientStop Color="#0A0A2A" Offset="1"/>
             </LinearGradientBrush>
-        </Grid.Background>-->
+        </Grid.Background>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,103 +25,158 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-         
-        
 
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#4316A7" Offset="0"/>
-                <GradientStop Color="DeepSkyBlue" Offset="0.5"/>
-                <GradientStop Color="#0B0B3B" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-
-        <TextBlock Grid.Row="1" Text="📝 إدخال القيد اليومي" FontSize="28" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <!-- عنوان -->
+        <TextBlock Grid.Row="1" Text="📝 إدخال القيد اليومي" 
+                   FontSize="30" FontWeight="SemiBold" Foreground="White" 
+                   HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
         <!-- بطاقة البيانات -->
-        <Border Grid.Row="2" Background="#66FFFFFF" CornerRadius="16" Padding="20" Margin="0,0,0,20" BorderBrush="#E0E0E0" BorderThickness="1">
-
-            <StackPanel Spacing="20">
-
+        <Border Grid.Row="2" Background="White" CornerRadius="15" Padding="25" 
+                Margin="0,0,0,20" BorderBrush="#E0E0E0" BorderThickness="1" 
+                 MaxWidth="1400">
+            <StackPanel Spacing="25">
                 <!-- الحقول -->
-                <StackPanel x:Name="InputStack" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text=" اليومية:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="DarkSlateGray"/>
-                        <TextBox Text="{Binding Name,Mode=TwoWay}" Width="180" Height="45" Padding="12" Background="#FFF" Foreground="Black" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="12"/>
+                <StackPanel x:Name="InputStack" Orientation="Horizontal" 
+                            HorizontalAlignment="Center" Spacing="25">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="اليومية:" VerticalAlignment="Center" 
+                                   FontSize="16" FontWeight="SemiBold" Foreground="#333"/>
+                        <TextBox Text="{Binding Name, Mode=TwoWay}" Width="200" Height="40" 
+                                 Padding="10" Background="#F5F5F5" Foreground="#333" 
+                                 BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="8"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text=" البيان:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="DarkSlateGray"/>
-                        <TextBox Text="{Binding Description,Mode=TwoWay}" Width="180" Height="45" Padding="12" Background="#FFF" Foreground="Black" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="12"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="البيان:" VerticalAlignment="Center" 
+                                   FontSize="16" FontWeight="SemiBold" Foreground="#333"/>
+                        <TextBox Text="{Binding Description, Mode=TwoWay}" Width="200" Height="40" 
+                                 Padding="10" Background="#F5F5F5" Foreground="#333" 
+                                 BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="8"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text=" دائن:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="DarkSlateGray"/>
-                        <TextBox Text="{Binding CreditAmount,Mode=TwoWay}" Width="140" Height="45" Padding="12" Background="#FFF" Foreground="Black" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="12" IsEnabled="{Binding IsCreditEnabled}"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="مدين:" VerticalAlignment="Center" 
+                                   FontSize="16" FontWeight="SemiBold" Foreground="#333"/>
+                        <TextBox Text="{Binding DebitAmount, Mode=TwoWay}" Width="150" Height="40" 
+                                 Padding="10" Background="#F5F5F5" Foreground="#333" 
+                                 BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="8" 
+                                 IsEnabled="{Binding IsDebitEnabled}"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text=" مدين:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="DarkSlateGray"/>
-                        <TextBox Text="{Binding DebitAmount,Mode=TwoWay}" Width="140" Height="45" Padding="12" Background="#FFF" Foreground="Black" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="12" IsEnabled="{Binding IsDebitEnabled}"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="دائن:" VerticalAlignment="Center" 
+                                   FontSize="16" FontWeight="SemiBold" Foreground="#333"/>
+                        <TextBox Text="{Binding CreditAmount, Mode=TwoWay}" Width="150" Height="40" 
+                                 Padding="10" Background="#F5F5F5" Foreground="#333" 
+                                 BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="8" 
+                                 IsEnabled="{Binding IsCreditEnabled}"/>
                     </StackPanel>
                 </StackPanel>
 
                 <!-- الكومبوبوكس -->
-                <StackPanel x:Name="ComboStack" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text=" الحساب:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="DarkSlateGray"/>
-                        <ComboBox ItemsSource="{Binding AllAccounts}" SelectedItem="{Binding SelectedAccount,Mode=TwoWay}" DisplayMemberPath="AccountName" 
-                           Width="220" Height="45" Padding="12" Background="#FFF" Foreground="Black" BorderBrush="#D0D0D0" CornerRadius="12"/>
+                <StackPanel x:Name="ComboStack" Orientation="Horizontal" 
+                            HorizontalAlignment="Center" Spacing="25">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="الحساب:" VerticalAlignment="Center" 
+                                   FontSize="16" FontWeight="SemiBold" Foreground="#333"/>
+                        <ComboBox ItemsSource="{Binding AllAccounts}" 
+                                  SelectedItem="{Binding SelectedAccount, Mode=TwoWay}" 
+                                  DisplayMemberPath="AccountName" 
+                                  Width="240" Height="40" Padding="10" 
+                                  Background="#F5F5F5" Foreground="#333" 
+                                  BorderBrush="#D0D0D0" CornerRadius="8"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text=" الفئة:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="DarkSlateGray"/>
-                        <ComboBox ItemsSource="{Binding AllCategories}" SelectedItem="{Binding SelectedCategory,Mode=TwoWay}" DisplayMemberPath="CategoryName" 
-                           Width="220" Height="45" Padding="12" Background="#FFF" Foreground="Black" BorderBrush="#D0D0D0" CornerRadius="12"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="الفئة:" VerticalAlignment="Center" 
+                                   FontSize="16" FontWeight="SemiBold" Foreground="#333"/>
+                        <ComboBox ItemsSource="{Binding AllCategories}" 
+                                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" 
+                                  DisplayMemberPath="CategoryName" 
+                                  Width="240" Height="40" Padding="10" 
+                                  Background="#F5F5F5" Foreground="#333" 
+                                  BorderBrush="#D0D0D0" CornerRadius="8"/>
                     </StackPanel>
                 </StackPanel>
 
                 <!-- زر الإضافة -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
-                    <Button Content="➕ إضافة" Command="{Binding AddEntryCommand}" Width="150" Height="45" 
-                     Background="DeepSkyBlue" Foreground="Black" FontWeight="SemiBold" CornerRadius="12" BorderThickness="0"/>
+                    <Button Content="➕ إضافة" Command="{Binding AddEntryCommand}" 
+                            Width="160" Height="40" FontSize="16" FontWeight="SemiBold" 
+                            Background="#4316A7" Foreground="White" CornerRadius="10">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="RootBorder" Background="{TemplateBinding Background}" 
+                                                    CornerRadius="10" Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal"/>
+                                                        <VisualState x:Name="PointerOver">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#5A2AB5"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Pressed">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#3A0E8C"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Disabled">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#A0A0A0"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
-
             </StackPanel>
         </Border>
 
         <!-- جدول القيد -->
-        <Border Grid.Row="3" Background="White" CornerRadius="10" Padding="10" Margin="0,10,0,10" BorderBrush="#E0E0E0" BorderThickness="1">
+        <Border Grid.Row="3" Background="White" CornerRadius="15" Padding="15" 
+                Margin="0,10,0,20" BorderBrush="#E0E0E0" BorderThickness="1" 
+                 MaxWidth="1400">
             <controls:DataGrid ItemsSource="{Binding JournalEntries}"  
-                AutoGenerateColumns="False"  
-                HeadersVisibility="Column"  
-                RowHeight="45"  
-                Background="White"  FontSize="14"  
-                
-                AlternatingRowBackground="LightGray">
+                              AutoGenerateColumns="False"  
+                              HeadersVisibility="Column"  
+                              RowHeight="50"  
+                              Background="White" FontSize="14"  
+                              AlternatingRowBackground="#F5F5F5" BorderThickness="0">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn  
                         Header="🧾 السطر"  
                         Binding="{Binding LineId}"  
                         IsReadOnly="True" Width="*"/>
-                    
                     <controls:DataGridTextColumn  
                         Header="🧾 الحساب"  
                         Binding="{Binding AccountName}"  
                         IsReadOnly="True" Width="*"/>
-
-                    <controls:DataGridTextColumn  
-                        Header="💸 (EGP) دائن"  
-                        Binding="{Binding CreditAmount, Mode=TwoWay}"  
-                        Width="*"
-                        />
-
                     <controls:DataGridTextColumn  
                         Header="💰 (EGP) مدين"  
                         Binding="{Binding DebitAmount, Mode=TwoWay}"  
                         Width="*"/>
-
+                    <controls:DataGridTextColumn  
+                        Header="💸 (EGP) دائن"  
+                        Binding="{Binding CreditAmount, Mode=TwoWay}"  
+                        Width="*"/>
                     <controls:DataGridTextColumn  
                         Header="📋 البيان"  
                         Binding="{Binding Description}"  
@@ -129,11 +186,50 @@
         </Border>
 
         <!-- زر الحفظ -->
-        <Button Grid.Row="4" Content="💾 حجز الأموال" Command="{Binding SaveCommand}" IsEnabled="{Binding IsSaveEnabled}" 
-         Width="160" Height="45" HorizontalAlignment="Right" Margin="0,0,0,10" 
-         Background="#388E3C" Foreground="White" FontWeight="Bold" CornerRadius="12" BorderThickness="0"/>
+        <Button Grid.Row="4" Content="💾 حجز الأموال" Command="{Binding SaveCommand}" 
+                IsEnabled="{Binding IsSaveEnabled}" Width="180" Height="40" 
+                HorizontalAlignment="Right" Margin="0,0,0,10" FontSize="16" 
+                Background="#388E3C" Foreground="White" FontWeight="SemiBold" CornerRadius="10">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="RootBorder" Background="{TemplateBinding Background}" 
+                                        CornerRadius="10" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal"/>
+                                            <VisualState x:Name="PointerOver">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="#4CAF50"/>
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="#2E7D32"/>
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Disabled">
+                                                <Storyboard>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="#A0A0A0"/>
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Page>
-
-
-

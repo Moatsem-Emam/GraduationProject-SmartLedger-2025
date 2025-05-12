@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <Page
     x:Class="SmartLedgerPL.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,85 +8,136 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:SmartLedgerPL.Helpers"
+    xmlns:converters="using:SmartLedgerPL.Converters"
     mc:Ignorable="d"
-    Loaded="Page_Loaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    FlowDirection="LeftToRight"
+    MinWidth="400" MinHeight="400">
+    <!-- Reduced minimum constraints -->
 
-    <Grid  FlowDirection="LeftToRight" Loaded="RootGrid_Loaded" x:Name="RootGrid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="3*" />
-        </Grid.ColumnDefinitions>
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <converters:PercentToMaxHeightConverter x:Key="PercentToMaxHeightConverter"/>
+        <converters:PercentToMaxWidthConverter x:Key="PercentToMaxWidthConverter"/>
+    </Page.Resources>
 
+    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" Padding="10">
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#4316A7" Offset="0"/>
-                <GradientStop Color="DeepSkyBlue" Offset="0.5"/>
-                <GradientStop Color="#0B0B3B" Offset="1"/>
+                <GradientStop Color="#2A0A73" Offset="0"/>
+                <GradientStop Color="#4A90E2" Offset="0.5"/>
+                <GradientStop Color="#0A0A2A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
 
         <!-- Login Card -->
-        <Border x:Name="LoginCard" Width="400" Height="600" Padding="10" Background="White" CornerRadius="12"
-            HorizontalAlignment="Center" VerticalAlignment="Center" Translation="0,0,32" >
-            <Border.Shadow>
-                <ThemeShadow />
-            </Border.Shadow>
-
-            <StackPanel Background="Transparent" Padding="40" Margin="10" VerticalAlignment="Center">
-                <Ellipse Width="100" Height="100" Margin="0,0,0,40">
+        <Border x:Name="LoginCard" Width="350" MinWidth="400" 
+                Height="540" MinHeight="400" 
+                Background="White" CornerRadius="15" Padding="20" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" 
+                BorderBrush="#E0E0E0" BorderThickness="1">
+            <StackPanel VerticalAlignment="Center" Spacing="15">
+                <Ellipse Width="100" Height="100" Margin="0,0,0,20">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="ms-appx:///Assets/Images/SmartLedger_Light.png" />
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <TextBlock x:Name="WelcomeText" Text="Welcome back !" FontSize="24" FontWeight="Bold" Margin="0,0,0,25">
-                    <TextBlock.RenderTransform>
-                        <TranslateTransform X="-200" />
-                    </TextBlock.RenderTransform>
+                <TextBlock x:Name="WelcomeText" Text="SmartLedger" FontSize="24" 
+                           FontWeight="SemiBold" Foreground="#333" 
+                           HorizontalAlignment="Center" Margin="0,0,0,15">
                 </TextBlock>
 
-                <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Email" FontSize="16" Margin="2"/>
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE77B;" Margin="2"/>
-                        <TextBox x:Name="EmailTextBox" Text="{Binding Email, Mode=TwoWay}"  CornerRadius="5" PlaceholderText="Enter your email address" Width="256"/>
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Username" FontSize="14" FontWeight="SemiBold" 
+                               Foreground="#333" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="" FontSize="18" Foreground="#4316A7" VerticalAlignment="Center"/>
+                        <TextBox x:Name="EmailTextBox" Text="{Binding Email, Mode=TwoWay}" 
+                                 PlaceholderText="Enter your username" Width="280" Height="35" 
+                                 Padding="8" Background="#F5F5F5" Foreground="#333" 
+                                 BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="8"/>
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Password" FontSize="16" Margin="2"/>
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE72E;" Margin="2"/>
-                        <PasswordBox Password="{Binding Password, Mode=TwoWay}" x:Name="PasswordBox" helpers:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" CornerRadius="5" PlaceholderText="Enter your password" Width="256"/>
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Password" FontSize="14" FontWeight="SemiBold" 
+                               Foreground="#333" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="" FontSize="18" Foreground="#4316A7" VerticalAlignment="Center"/>
+                        <PasswordBox x:Name="PasswordBox" Password="{Binding Password, Mode=TwoWay}" 
+                                     helpers:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" 
+                                     PlaceholderText="Enter your password" Width="280" Height="35" 
+                                     Padding="8" Background="#F5F5F5" Foreground="#333" 
+                                     BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="8"/>
                     </StackPanel>
                 </StackPanel>
 
-                <!--<StackPanel Orientation="Horizontal">
-                    <CheckBox x:Name="RememberMeCheckBox" Content="Remember Me"  />
-                    <HyperlinkButton Content="Forgot Password?" Margin="40,0,0,0"/>
-                </StackPanel>-->
-
-                <Button Content="Log In" Command="{Binding LoginCommand}" Background="DeepSkyBlue" Foreground="White"
-                    Margin="0,10,0,10" Height="40" CornerRadius="15" HorizontalAlignment="Stretch" />
-
-                <!--<RichTextBlock>
-                    <Paragraph>
-                        <Hyperlink Click="GoToRegisterPage_Click">
-                            <Span>
-                                <Run Text="Don't have an account? "/>
-                                <Run Text="CREATE ONE NOW" Foreground="Red"/>
-                            </Span>
-                        </Hyperlink>
-                    </Paragraph>
-                </RichTextBlock>-->
+                <Button Command="{Binding LoginCommand}" 
+                        Width="180" Height="40" FontSize="14" FontWeight="SemiBold" 
+                        Background="#4316A7" Foreground="White" CornerRadius="10" 
+                        HorizontalAlignment="Center" Margin="0,15,0,0" 
+                        IsEnabled="{Binding IsLoggingIn, Converter={StaticResource InverseBooleanConverter}}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Log In" VerticalAlignment="Center"/>
+                        <ProgressRing Width="18" Height="18" Foreground="White" IsActive="{Binding IsLoggingIn}" 
+                                      Visibility="{Binding IsLoggingIn, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </StackPanel>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="RootBorder" Background="{TemplateBinding Background}" 
+                                                CornerRadius="10" Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="PointerOver">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#5A2AB5"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#3A0E8C"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#A0A0A0"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
         </Border>
 
         <!-- Right side illustration -->
-        <Grid Grid.Column="1">
-            <Image Source="/Assets/Images/Work in progress-rafiki.png"/>
+        <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image Source="/Assets/Images/Work in progress-rafiki.png" MaxWidth="400" MaxHeight="400" Stretch="Uniform"/>
         </Grid>
     </Grid>
 </Page>

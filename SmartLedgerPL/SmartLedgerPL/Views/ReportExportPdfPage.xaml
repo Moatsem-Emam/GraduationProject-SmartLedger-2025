@@ -12,140 +12,72 @@
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#4316A7" Offset="0"/>
-                <GradientStop Color="DeepSkyBlue" Offset="0.5"/>
-                <GradientStop Color="#0B0B3B" Offset="1"/>
+                <GradientStop Color="#2A0A73" Offset="0"/>
+                <GradientStop Color="#4A90E2" Offset="0.5"/>
+                <GradientStop Color="#0A0A2A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="900" Spacing="20" Padding="20">
-                <!-- Header -->
-                <Border Background="White" CornerRadius="20" Padding="30" >
-                    <StackPanel Spacing="10">
-                        <TextBlock Text="نظام أوراكل للرواتب" FontSize="22" FontWeight="Bold" TextAlignment="Center"/>
-                        <TextBlock Text="كشف إجماليات المرتب لكل سجل لديك عن شهر: مارس سنة 2023" FontSize="18" TextAlignment="Center"/>
-                        <TextBlock Text="الجهة: كلية العلوم - جامعة عين شمس" FontSize="16" TextAlignment="Center"/>
-                        <TextBlock Text="نوع الصرف: نوع الصرف الإلكتروني" FontSize="16" TextAlignment="Center"/>
-                        <TextBlock Text="البنك: البنك الأهلي المصري" FontSize="16" TextAlignment="Center"/>
-                    </StackPanel>
-                </Border>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" MaxWidth="1400" MinWidth="800" Spacing="30" Padding="30">
 
                 <!-- Tables -->
-                <Grid Background="White" Padding="20" CornerRadius="20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Border Background="White" CornerRadius="15" Padding="25" BorderBrush="#E0E0E0" BorderThickness="1" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Earnings --><!--
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="الاستحقاقات" FontSize="20" FontWeight="Bold" Margin="0 0 0 10"/>
-
-                        <StackPanel>
-                            <TextBlock Text="7890.00 - المرتب الوظيفي" Margin="5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="-90"/>
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                            <TextBlock Text="1000.00 - حوافز أخرى" Margin="5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="-90"/>
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                            <TextBlock Text="850.00 - مكافأة" Margin="5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="-90"/>
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
+                        <!-- الاستحقاقات -->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="الاستحقاقات" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15" Foreground="#333"/>
+                            <ListView ItemsSource="{Binding Entitlements}" BorderThickness="0" SelectionMode="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="15" Margin="0,5" Background="#F5F5F5" CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1">
+                                            <StackPanel Orientation="Horizontal" Spacing="25">
+                                                <TextBlock Text="{Binding AccountId}" Width="150" FontSize="15" Foreground="#555"/>
+                                                <TextBlock Text="{Binding AccountName}" Width="300" FontSize="15" Foreground="#555"/>
+                                                <TextBlock Text="{Binding EarningsAmount}" Width="100" FontSize="15" Foreground="#555"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <TextBlock Text="إجمالي الاستحقاقات:" FontSize="18" FontWeight="SemiBold" Margin="0,15,0,10" Foreground="#333"/>
+                            <TextBlock Text="{Binding TotalEarnings}" FontSize="16" FontWeight="Bold" Foreground="#4316A7"/>
                         </StackPanel>
 
-                        <TextBlock Text="الإجمالي: 9,740.00" FontWeight="Bold" Margin="0 10 0 0"/>
-                    </StackPanel>
-
-
-                    --><!-- Deductions --><!--
-                    <StackPanel Grid.Column="2">
-                        <TextBlock Text="الاستقطاعات" FontSize="20" FontWeight="Bold" Margin="0 0 0 10"/>
-
-                        <StackPanel>
-                            <TextBlock Text="1200.00 - ضرائب" Margin="5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="-90"/>
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                            <TextBlock Text="350.00 - تأمين صحي" Margin="5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="-90"/>
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                            <TextBlock Text="250.00 - صندوق الزمالة" Margin="5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="-90"/>
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
+                        <!-- الاستقطاعات -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="الاستقطاعات" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15" Foreground="#333"/>
+                            <ListView ItemsSource="{Binding Deductions}" BorderThickness="0" SelectionMode="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="15" Margin="0,5" Background="#F5F5F5" CornerRadius="8" BorderBrush="#E0E0E0" BorderThickness="1">
+                                            <StackPanel Orientation="Horizontal" Spacing="25">
+                                                <TextBlock Text="{Binding AccountId}" Width="150" FontSize="15" Foreground="#555"/>
+                                                <TextBlock Text="{Binding AccountName}" Width="300" FontSize="15" Foreground="#555"/>
+                                                <TextBlock Text="{Binding DeductionsAmount}" Width="100" FontSize="15" Foreground="#555"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <TextBlock Text="إجمالي الاستقطاعات:" FontSize="18" FontWeight="SemiBold" Margin="0,15,0,10" Foreground="#333"/>
+                            <TextBlock Text="{Binding TotalDeductions}" FontSize="16" FontWeight="Bold" Foreground="#4316A7"/>
                         </StackPanel>
-
-                        <TextBlock Text="الإجمالي: 1,800.00" FontWeight="Bold" Margin="0 10 0 0"/>
-                    </StackPanel>-->
-
-
-                    <!-- الاستحقاقات -->
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="الاستحقاقات" FontSize="18" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <ListView ItemsSource="{Binding Entitlements}" BorderThickness="0">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Padding="10" Margin="0,5" Background="#F9F9F9" CornerRadius="10">
-                                        <StackPanel Orientation="Horizontal" Spacing="20">
-                                            <TextBlock Text="{Binding AccountName}" Width="200" FontSize="16"/>
-                                            <TextBlock Text="{Binding CreditAmount}" Width="100" FontSize="16"/>
-                                            
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <!-- Total Credit -->
-
-                        <TextBlock Text="إجمالي الاستحقاقات:" FontSize="18" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <TextBlock Text="{Binding TotalCredit}"
-                                   FontWeight="Bold"
-                                   FontSize="16"
-                                   Margin="0,10,0,0"/>
-
-                    </StackPanel>
-
-                    <!-- الاستقطاعات -->
-                    <StackPanel Grid.Column="2">
-                        <TextBlock Text="الاستقطاعات" FontSize="18" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <ListView ItemsSource="{Binding Deductions}" BorderThickness="0">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Padding="10" Margin="0,5" Background="#F9F9F9" CornerRadius="10">
-                                        <StackPanel Orientation="Horizontal" Spacing="20">
-                                            <TextBlock Text="{Binding AccountName}" Width="200" FontSize="16"/>
-                                            <TextBlock Text="{Binding DebitAmount}" Width="100" FontSize="16"/>
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <TextBlock Text="إجمالي الاستقطاعات:" FontSize="18" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <TextBlock Text="{Binding TotalDebit}"
-                                   FontWeight="Bold"
-                                   FontSize="16"
-                                   Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Grid>
+                    </Grid>
+                </Border>
 
                 <!-- Summary -->
-                <Border Background="White" CornerRadius="20" Padding="20">
-                    <StackPanel Spacing="10">
-                        <TextBlock Text="جملة الصافي المستحق: 7,940.00" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
-                        <TextBlock Text="فقط: سبعة آلاف وتسعمائة وأربعون جنيهاً لا غير" FontSize="16" TextAlignment="Center"/>
-                        <TextBlock Text="ملاحظات: ............" FontSize="14" TextAlignment="Right"/>
+                <Border Background="White" CornerRadius="15" Padding="25" BorderBrush="#E0E0E0" BorderThickness="1" >
+                    <StackPanel Spacing="15">
+                        <TextBlock Text="جملة الصافي المستحق:" FontSize="20" FontWeight="SemiBold" TextAlignment="Center" Foreground="#333"/>
+                        <TextBlock Text="{Binding Total}" FontSize="18" FontWeight="Bold" TextAlignment="Center" Foreground="#4316A7"/>
+                        <TextBlock Text="ملاحظات: ............" FontSize="14" TextAlignment="Right" Foreground="#666"/>
                     </StackPanel>
                 </Border>
 
@@ -153,12 +85,59 @@
                 <Button Content="تصدير PDF" 
                         Command="{Binding ExportToPdfCommand}" 
                         HorizontalAlignment="Left" 
-                        Padding="10,5" 
+                        Padding="15,8" 
                         FontSize="16"
                         Background="#4316A7" 
                         Foreground="White" 
-                        CornerRadius="10"/>
+                        CornerRadius="10">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="RootBorder" 
+                                                Background="{TemplateBinding Background}" 
+                                                CornerRadius="10" 
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="PointerOver">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#5A2AB5"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#3A0E8C"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled"/>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
         </ScrollViewer>
     </Grid>
 </Page>
+<!-- Header -->
+                <!--<Border Background="White" CornerRadius="20" Padding="30" >
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="نظام أوراكل للرواتب" FontSize="22" FontWeight="Bold" TextAlignment="Center"/>
+                        <TextBlock Text="كشف إجماليات المرتب لكل سجل لديك عن شهر: مارس سنة 2023" FontSize="18" TextAlignment="Center"/>
+                        <TextBlock Text="الجهة: كلية العلوم - جامعة عين شمس" FontSize="16" TextAlignment="Center"/>
+                        <TextBlock Text="نوع الصرف: نوع الصرف الإلكتروني" FontSize="16" TextAlignment="Center"/>
+                        <TextBlock Text="البنك: البنك الأهلي المصري" FontSize="16" TextAlignment="Center"/>
+                    </StackPanel>
+                </Border>-->

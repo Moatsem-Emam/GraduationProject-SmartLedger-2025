@@ -11,11 +11,14 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using SmartLedger.Application.Interfaces.IAppDb;
+using SmartLedger.Application.Interfaces.IDataSeeding;
 using SmartLedger.Application.Interfaces.IServices;
 using SmartLedger.Application.Mapping;
+using SmartLedger.Domain.Entities;
 using SmartLedger.Domain.Interfaces.IRepositories;
 using SmartLedger.Domain.Interfaces.IUnitOfWork;
 using SmartLedger.Infrastructure.Data;
+using SmartLedger.Infrastructure.DataSeeding;
 using SmartLedger.Infrastructure.Repositories;
 using SmartLedger.Infrastructure.Services;
 using SmartLedgerPL.Helpers;
@@ -76,6 +79,14 @@ namespace SmartLedgerPL
             // DB Config
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            // Seeding Data
+            services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddScoped<ISeeder, UserSeeding>();
+            services.AddScoped<ISeeder, CategorySeeding>();
+            services.AddScoped<ISeeder, PayrollItemSeeding>();
+            services.AddScoped<ISeeder, AccountSeeding>();
+            //services.AddScoped<ISeeder, JournalEntrySeeding>();
+
             // Unit Of Work
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             // Repositories
@@ -113,8 +124,15 @@ namespace SmartLedgerPL
         /// <param name="args">Details about the launch request and process.</param>
 
         public NavigationView NavView => MainWindow.NavViewPublic;
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+
+            using (var scope = AppHost.Services.CreateScope())
+            {
+                var dbInit = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                await dbInit.InitializeAsync();
+
+            }
             MainWindow = new MainWindow();
             MainWindow.Activate();
 

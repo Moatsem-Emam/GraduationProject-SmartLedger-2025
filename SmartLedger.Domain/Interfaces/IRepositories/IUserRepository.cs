@@ -9,7 +9,7 @@ namespace SmartLedger.Domain.Interfaces.IRepositories
 {
     public interface IUserRepository
     {
-        Task<User> AuthenticateAsync(string email, string password);
-
+        Task<User> AuthenticateAsync(string userName, string password);
+        
     }
 }

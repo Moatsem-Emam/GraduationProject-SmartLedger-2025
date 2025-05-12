@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Windows.Storage;
 using SmartLedgerPL.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -61,27 +62,53 @@ namespace SmartLedgerPL.Views
         //    }
         //}
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (!_hasAnimated)
-            {
-                _hasAnimated = true;
+        //private void Page_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    if (_hasAnimated)
+        //        return;
 
-                var welcomeTextAnimation = new DoubleAnimation
-                {
-                    From = -200,
-                    To = 0,
-                    Duration = new Duration(TimeSpan.FromSeconds(0.8))
-                };
+        //    _hasAnimated = true;
 
-                Storyboard.SetTarget(welcomeTextAnimation, WelcomeText);
-                Storyboard.SetTargetProperty(welcomeTextAnimation, "(UIElement.RenderTransform).(TranslateTransform.X)");
+        //    // Ensure WelcomeText is loaded
+        //    if (WelcomeText == null)
+        //    {
+        //        Debug.WriteLine("WelcomeText is null in Page_Loaded");
+        //        return;
+        //    }
 
-                var storyboard = new Storyboard();
-                storyboard.Children.Add(welcomeTextAnimation);
-                storyboard.Begin();
-            }
-        }
+        //    // Use DispatcherQueue to run animation on the UI thread
+        //    var dispatcherQueue = Windows.System.DispatcherQueue.GetForCurrentThread();
+        //    if (dispatcherQueue == null)
+        //    {
+        //        Debug.WriteLine("DispatcherQueue is null in Page_Loaded");
+        //        return;
+        //    }
+
+        //    dispatcherQueue.TryEnqueue(() =>
+        //    {
+        //        try
+        //        {
+        //            var welcomeTextAnimation = new DoubleAnimation
+        //            {
+        //                From = -200,
+        //                To = 0,
+        //                Duration = new Duration(TimeSpan.FromSeconds(0.8)),
+        //                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+        //            };
+
+        //            Storyboard.SetTarget(welcomeTextAnimation, WelcomeText);
+        //            Storyboard.SetTargetProperty(welcomeTextAnimation, "(UIElement.RenderTransform).(TranslateTransform.X)");
+
+        //            var storyboard = new Storyboard();
+        //            storyboard.Children.Add(welcomeTextAnimation);
+        //            storyboard.Begin();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Debug.WriteLine($"Animation failed: {ex.Message}");
+        //        }
+        //    });
+        //}
 
         //private async void ShowMessageAsync(string title, string message)
         //{

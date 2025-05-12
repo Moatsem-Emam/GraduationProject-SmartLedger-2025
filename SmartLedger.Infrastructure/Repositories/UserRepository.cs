@@ -20,9 +20,9 @@ namespace SmartLedger.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<User> AuthenticateAsync(string email,string password)
+        public async Task<User> AuthenticateAsync(string userName,string password)
         {
-            var user = _context.Users.FirstOrDefault(u=>u.Email==email);
+            var user = _context.Users.FirstOrDefault(u=>u.UserName== userName);
             if (user is null) return null;
             if (BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                 return user;

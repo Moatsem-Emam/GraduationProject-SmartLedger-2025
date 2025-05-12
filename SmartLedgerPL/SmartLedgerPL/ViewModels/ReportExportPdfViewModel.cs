@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using SmartLedgerPL.Helpers;
+using static SmartLedgerPL.Helpers.HelperUtilities;
 
 
 namespace SmartLedgerPL.ViewModels
@@ -26,16 +27,19 @@ namespace SmartLedgerPL.ViewModels
         private List<ReportDto> reportDataList;
 
         [ObservableProperty]
-        private long totalDebit;
+        private long totalEarnings;
 
         [ObservableProperty]
-        private long totalCredit;
+        private long totalDeductions;
 
         [ObservableProperty]
-        private List<long> allDebits;
+        private long total;
 
-        [ObservableProperty]
-        private List<long> allCredits;
+        //[ObservableProperty]
+        //private List<long> allDebits;
+
+        //[ObservableProperty]
+        //private List<long> allCredits;
 
         [ObservableProperty]
         private ObservableCollection<ReportDto> deductions;
@@ -60,30 +64,36 @@ namespace SmartLedgerPL.ViewModels
                 SelectedJournal = entry;
 
                 // Load JournalEntryDetails from DB if needed
-                (AllCredits,AllDebits,TotalCredit,TotalDebit) = _helper.GetDebitCreditSums(entry.Details);
-
-                // قائمة الاستقطاعات (Debit فقط > 0)
-                var deduction = entry.Details
-                                .Where(d => d.DebitAmount > 0)
+                //(AllCredits, AllDebits, TotalCredit, TotalDebit) = _helper.GetDebitCreditSums(entry.Details);
+                // قائمة الاستحقاقات 
+                var entitlement = entry.Details
+                                .Where(d => d.Account.PayrollItemId == 1)
                                 .Select(detail => new ReportDto
                                 {
                                     AccountId = detail.AccountId,
                                     AccountName = detail.Account.AccountName,
-                                    DebitAmount = detail.DebitAmount
+                                    EarningsAmount = (detail.CreditAmount==0)? detail.DebitAmount: detail.CreditAmount
                                 });
+                TotalEarnings = _helper.SumAmount(amountList: entitlement, amountType: Amount.Earnings);
+                Entitlements = new ObservableCollection<ReportDto>(entitlement);
+
+                // قائمة الاستقطاعات 
+                var deduction = entry.Details
+                                .Where(d => d.Account.PayrollItemId == 2)
+                                .Select(detail => new ReportDto
+                                {
+                                    AccountId = detail.AccountId,
+                                    AccountName = detail.Account.AccountName,
+                                    DeductionsAmount = (detail.CreditAmount == 0) ? detail.DebitAmount : detail.CreditAmount
+                                    
+                                });
+                TotalDeductions = _helper.SumAmount(amountList: deduction, amountType: Amount.Deduction);
                 Deductions = new ObservableCollection<ReportDto>(deduction);
 
-                // قائمة الاستحقاقات (Debit فقط > 0)
-                var entitlement = entry.Details
-                                .Where(d => d.CreditAmount > 0)
-                                .Select(detail => new ReportDto
-                                {
-                                    AccountId = detail.AccountId,
-                                    AccountName = detail.Account.AccountName,
-                                    CreditAmount = detail.CreditAmount
-                                });
-                Entitlements = new ObservableCollection<ReportDto>(entitlement);
+
+                Total = TotalEarnings - TotalDeductions;
             }
+
         }
 
 

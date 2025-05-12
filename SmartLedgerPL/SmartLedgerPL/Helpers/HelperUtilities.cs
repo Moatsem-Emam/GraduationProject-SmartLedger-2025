@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SmartLedger.Application.DTOs;
+using SmartLedger.Application.Interfaces.IDTOs;
 using SmartLedger.Application.Interfaces.IServices;
 using SmartLedger.Domain.Entities;
 using System;
@@ -80,6 +81,22 @@ namespace SmartLedgerPL.Helpers
             var totalCredit = credits.Sum();
 
             return (credits, debits, totalCredit, totalDebit);
+        }
+        public enum Amount
+        {
+            Earnings,
+            Deduction
+        }
+
+        public long SumAmount(IEnumerable<ReportDto> amountList, Amount amountType)
+        {
+          
+            if (amountList == null || !amountList.Any())
+                return 0;
+
+            return (amountType == Amount.Earnings)
+                ? amountList.Sum(a => a?.EarningsAmount ?? 0)
+                : amountList.Sum(a => a?.DeductionsAmount ?? 0);
         }
 
         //public async Task<(bool confirm, JournalEntry editedEntries)> ShowTextEntryDialogAsync(JournalEntryDto entry)

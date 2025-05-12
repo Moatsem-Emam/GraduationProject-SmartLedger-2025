@@ -30,8 +30,8 @@ namespace SmartLedgerPL.ViewModels
         [ObservableProperty]
         private string password;
 
-        //[ObservableProperty]
-        //private bool isLoggingIn;
+        [ObservableProperty]
+        private bool isLoggingIn;
 
         public LoginViewModel(IAuthService authService, INavigationService navigationService, HelperUtilities helper)
         {
@@ -44,7 +44,7 @@ namespace SmartLedgerPL.ViewModels
         public NavigationView NavView => App.MainWindow.NavViewPublic;
         private async Task Login()
         {
-            //IsLoggingIn = true; // Start spinner
+            IsLoggingIn = true; // Start spinner
             try
             {
                 var user = await _authService.Authenticate(Email, Password);
@@ -58,7 +58,7 @@ namespace SmartLedgerPL.ViewModels
                     // تحديث MainWindow.NavigationView حسب الدور
                     var window = (MainWindow)App.MainWindow;
                     await window.UpdateNavViewByRoleAsync();
-
+                    await Task.Delay(2000);
                     // Navigate
                     if (user.Role == "Admin")
                     {
@@ -80,10 +80,10 @@ namespace SmartLedgerPL.ViewModels
 
                 await _helper.ShowMessageDialogAsync("Check the service of SQLSERVER might be closed", "Server NotFound");
             }
-            //finally
-            //{
-            //    IsLoggingIn = false; // Stop spinner
-            //}
+            finally
+            {
+                IsLoggingIn = false; // Stop spinner
+            }
 
         }
 

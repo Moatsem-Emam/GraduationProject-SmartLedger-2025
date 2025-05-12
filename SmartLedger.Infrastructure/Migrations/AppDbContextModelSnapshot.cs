@@ -31,16 +31,20 @@ namespace SmartLedger.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AccountName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PayrollItemId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PayrollItemId");
 
                     b.ToTable("Accounts");
                 });
@@ -140,7 +144,7 @@ namespace SmartLedger.Infrastructure.Migrations
                     b.ToTable("JournalEntryDetails");
                 });
 
-            modelBuilder.Entity("SmartLedger.Domain.Entities.User", b =>
+            modelBuilder.Entity("SmartLedger.Domain.Entities.PayrollItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,9 +155,28 @@ namespace SmartLedger.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PayrollItems");
+                });
+
+            modelBuilder.Entity("SmartLedger.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -166,9 +189,24 @@ namespace SmartLedger.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SmartLedger.Domain.Entities.Account", b =>
+                {
+                    b.HasOne("SmartLedger.Domain.Entities.PayrollItem", "PayrollItem")
+                        .WithMany("Accounts")
+                        .HasForeignKey("PayrollItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PayrollItem");
                 });
 
             modelBuilder.Entity("SmartLedger.Domain.Entities.JournalEntry", b =>
@@ -222,6 +260,11 @@ namespace SmartLedger.Infrastructure.Migrations
             modelBuilder.Entity("SmartLedger.Domain.Entities.JournalEntry", b =>
                 {
                     b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("SmartLedger.Domain.Entities.PayrollItem", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 
             modelBuilder.Entity("SmartLedger.Domain.Entities.User", b =>

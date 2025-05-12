@@ -15,7 +15,7 @@ namespace SmartLedger.Infrastructure.Config
 
             builder.HasOne(e => e.Category)
                    .WithMany(c => c.JournalEntries)
-                   .HasForeignKey(e => e.CategoryId);
+                   .HasForeignKey(c => c.CategoryId);
         }
     }
 

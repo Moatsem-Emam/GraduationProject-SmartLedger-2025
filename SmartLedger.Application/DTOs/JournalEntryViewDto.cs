@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartLedger.Application.DTOs
 {
-    public class JournalEntryViewDto : IJournalEntryDetailDto,IJournalEntryDescDto
+    public class JournalEntryViewDto : IJournalEntryDetailDto,IJournalEntryDescDto,IAmount
     {
         public int LineId { get; set; }
         public long AccountId { get; set; }

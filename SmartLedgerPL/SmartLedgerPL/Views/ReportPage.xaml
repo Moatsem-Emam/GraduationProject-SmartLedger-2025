@@ -1,24 +1,57 @@
 <Page 
- x:Class="SmartLedgerPL.Views.ReportPage" 
- xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
- xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
- xmlns:local="using:SmartLedgerPL.Views" 
- xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
- xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
- xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls" 
- xmlns:viewmodels="using:SmartLedgerPL.ViewModels" 
- xmlns:helpers="using:SmartLedgerPL.Helpers" 
- xmlns:converters="using:SmartLedgerPL.Converters" 
- mc:Ignorable="d">
+    x:Class="SmartLedgerPL.Views.ReportPage" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:local="using:SmartLedgerPL.Views" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls" 
+    xmlns:viewmodels="using:SmartLedgerPL.ViewModels" 
+    xmlns:helpers="using:SmartLedgerPL.Helpers" 
+    xmlns:converters="using:SmartLedgerPL.Converters" 
+    mc:Ignorable="d"
+    FlowDirection="RightToLeft">
 
     <Page.Resources>
         <!-- كارت "إضافة قيد" -->
         <DataTemplate x:Key="AddNewCardTemplate">
-            <Border Background="Wheat" CornerRadius="12" Margin="8" Padding="12">
-                <Button Click="AddEntry_Click" Background="Transparent" BorderThickness="0" Width="200" Height="150">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <FontIcon Glyph="&#xE710;" FontSize="30" Foreground="DarkSlateGray"/>
-                        <TextBlock Text="إضافة قيد جديد" FontSize="16" FontWeight="Bold" Foreground="#333" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+            <Border Background="#FFF8E1" CornerRadius="15" Margin="10" Padding="15" BorderBrush="#E0E0E0" BorderThickness="1" >
+                <Button Click="AddEntry_Click" Background="Transparent" BorderThickness="0" Width="220" Height="160">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="RootBorder" Background="{TemplateBinding Background}">
+                                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="PointerOver">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFF5C7"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFE8A0"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+                        <FontIcon Glyph="" FontSize="32" Foreground="#4316A7"/>
+                        <TextBlock Text="إضافة قيد جديد" FontSize="16" FontWeight="SemiBold" Foreground="#333" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
             </Border>
@@ -26,8 +59,8 @@
 
         <!-- كارت القيد العادي -->
         <DataTemplate x:Key="JournalEntryTemplate">
-            <Border Background="White" CornerRadius="12" Margin="8" Padding="12" BorderBrush="#DDD" BorderThickness="1">
-                <Grid Width="200" Height="150">
+            <Border Background="White" CornerRadius="15" Margin="10" Padding="15" BorderBrush="#E0E0E0" BorderThickness="1" >
+                <Grid Width="220" Height="160">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -35,25 +68,75 @@
 
                     <!-- تعديل -->
                     <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" 
-                            Width="50" Height="50" Click="EditButton_Click" 
+                            Width="40" Height="40" Click="EditButton_Click" 
                             Background="Transparent" BorderThickness="0" 
                             Tag="{Binding}" ToolTipService.ToolTip="تعديل">
-                        <FontIcon Glyph="&#xE70F;" FontSize="18" Foreground="#333"/>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="RootBorder" Background="{TemplateBinding Background}">
+                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal"/>
+                                                        <VisualState x:Name="PointerOver">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#F0F0F0"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <FontIcon Glyph="" FontSize="20" Foreground="#4316A7"/>
                     </Button>
 
                     <!-- حذف -->
                     <Button Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                            Width="50" Height="50" Click="DeleteButton_Click" 
+                            Width="40" Height="40" Click="DeleteButton_Click" 
                             Background="Transparent" BorderThickness="0" 
                             Tag="{Binding}" ToolTipService.ToolTip="حذف">
-                        <FontIcon Glyph="&#xE74D;" FontSize="18" Foreground="#333"/>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="RootBorder" Background="{TemplateBinding Background}">
+                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal"/>
+                                                        <VisualState x:Name="PointerOver">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#F0F0F0"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <FontIcon Glyph="" FontSize="20" Foreground="#4316A7"/>
                     </Button>
 
                     <!-- محتوى الكارت -->
-                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="SemiBold" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center"/>
-                        <TextBlock Text="{Binding CategoryName}" FontSize="17" FontWeight="SemiBold" Foreground="#444" TextWrapping="Wrap" TextAlignment="Center"/>
-                        <TextBlock Text="{Binding FormattedDate}" FontSize="14" Foreground="#666" Margin="0,6,0,0" TextAlignment="Center"/>
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="SemiBold" Foreground="#333" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding CategoryName}" FontSize="16" FontWeight="Normal" Foreground="#555" TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding FormattedDate}" FontSize="14" Foreground="#666" TextAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -63,98 +146,156 @@
 
         <!-- TemplateSelector -->
         <helpers:JournalEntryTemplateSelector x:Key="JournalEntryTemplateSelector" 
-                                              AddCardTemplate="{StaticResource AddNewCardTemplate}" 
-                                              EntryCardTemplate="{StaticResource JournalEntryTemplate}"/>
+                                             AddCardTemplate="{StaticResource AddNewCardTemplate}" 
+                                             EntryCardTemplate="{StaticResource JournalEntryTemplate}"/>
     </Page.Resources>
 
-    <Grid Padding="20">
+    <Grid Padding="30">
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#2A0A73" Offset="0"/>
+                <GradientStop Color="#4A90E2" Offset="0.5"/>
+                <GradientStop Color="#0A0A2A" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <!-- الخلفية -->
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#4316A7" Offset="0"/>
-                <GradientStop Color="DeepSkyBlue" Offset="0.5"/>
-                <GradientStop Color="#0B0B3B" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
 
         <!-- عنوان -->
         <TextBlock Grid.Row="0" Text="📊 تقارير القيد اليومي" 
-                   FontSize="28" FontWeight="Bold" 
-                   Foreground="Black" HorizontalAlignment="Center" 
-                   Margin="0,0,0,20"/>
+                   FontSize="30" FontWeight="SemiBold" 
+                   Foreground="White" HorizontalAlignment="Center" 
+                   Margin="0,0,0,30"/>
 
-        <Border Grid.Row="1" Background="#66FFFFFF" CornerRadius="16" Padding="10" Margin="0,0,0,10" BorderBrush="#E0E0E0" BorderThickness="1">
+        <!-- البحث -->
+        <Border Grid.Row="1" Background="White" CornerRadius="15" Padding="15" Margin="0,0,0,20" BorderBrush="#E0E0E0" BorderThickness="1" >
             <StackPanel x:Name="InputStack" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <TextBlock Text=" 🔍 بحث:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="DarkSlateGray"/>
-                    <TextBox x:Name="SearchBox" Text="{Binding SearchText,Mode=TwoWay}" TextChanged="SearchBox_TextChanged" Width="180" Height="45" Padding="12" Background="#FFF" Foreground="Black" BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="12"/>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock Text="🔍 بحث:" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold" Foreground="#333"/>
+                    <TextBox x:Name="SearchBox" Text="{Binding SearchText, Mode=TwoWay}" TextChanged="SearchBox_TextChanged" 
+                             Width="200" Height="40" Padding="10" Background="#F5F5F5" Foreground="#333" 
+                             BorderBrush="#D0D0D0" BorderThickness="1" CornerRadius="8"/>
                 </StackPanel>
             </StackPanel>
         </Border>
 
+        <!-- GridView -->
         <GridView Grid.Row="2" 
                   ItemsSource="{Binding FilteredJournalEntries}" 
                   IsItemClickEnabled="True" 
                   ItemClick="GridView_ItemClick" 
                   ItemTemplateSelector="{StaticResource JournalEntryTemplateSelector}" 
                   SelectionMode="None" 
-                  HorizontalAlignment="Center">
+                  HorizontalAlignment="Center"
+                  MaxWidth="1400">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal"/>
+                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="5"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     <Setter Property="VerticalContentAlignment" Value="Top"/>
+                    <Setter Property="Margin" Value="5"/>
                 </Style>
             </GridView.ItemContainerStyle>
         </GridView>
 
-        <!-- Pagination in Grid.Row=3 -->
-        <StackPanel Visibility="{Binding PaginationVisibility}" Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">
-
-            <!-- Navigation Buttons -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-                <Button x:Name="next" Content="⟶ التالي" Click="NextPage_Click"
-                        Background="White" Foreground="#333" Padding="10,5" 
-                        CornerRadius="8" BorderThickness="1" BorderBrush="#CCC"/>
-
-                <TextBlock Text="{Binding PageDisplay}" 
-                           VerticalAlignment="Center" FontWeight="Bold" 
-                           Foreground="White" FontSize="16"/>
-
-                <Button x:Name="prev"  Content="⟵ السابق" Click="PreviousPage_Click"
-                        Background="White" Foreground="#333" Padding="10,5"
-                        CornerRadius="8" BorderThickness="1" BorderBrush="#CCC"/>
-            </StackPanel>
-
+        <!-- Pagination -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" Spacing="15"
+                    Visibility="{Binding PaginationVisibility, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Button x:Name="prev" Content="⟵ السابق" Click="PreviousPage_Click"
+                    Padding="12,6" FontSize="14" Background="#4316A7" Foreground="White" CornerRadius="8">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="RootBorder" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="PointerOver">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#5A2AB5"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#3A0E8C"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <TextBlock Text="{Binding PageDisplay}" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold" Foreground="White"/>
+            <Button x:Name="next" Content="التالي ⟶" Click="NextPage_Click"
+                    Padding="12,6" FontSize="14" Background="#4316A7" Foreground="White" CornerRadius="8">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="RootBorder" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="PointerOver">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#5A2AB5"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#3A0E8C"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
 
         <!-- Loading Indicator -->
         <Grid Grid.Row="2" Background="Transparent" 
               Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
-            <ProgressRing IsActive="True" Width="60" Height="60" 
+            <ProgressRing IsActive="True" Width="80" Height="80" Foreground="#4316A7"
                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
+        <!-- No Data Message -->
         <Grid Grid.Row="2" Background="Transparent" 
-      Visibility="{Binding IsNull}">
+              Visibility="{Binding IsNull, Converter={StaticResource BoolToVisibilityConverter}}">
             <TextBlock Text="لا توجد بيانات" 
-           FontSize="28" FontWeight="Bold" 
-           Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"
-           Margin="0,0,0,20"/>
+                       FontSize="24" FontWeight="SemiBold" 
+                       Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
-
     </Grid>
 </Page>

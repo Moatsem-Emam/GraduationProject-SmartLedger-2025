@@ -10,8 +10,7 @@ namespace SmartLedger.Domain.Entities
 {
     public class User:BaseEntity.BaseEntity<int>
     {
-        [EmailAddress]
-        public string Email { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public string Role { get; set; } = "User"; // Admin / User
         public ICollection<JournalEntry> JournalEntries { get; set; } = new List<JournalEntry>();

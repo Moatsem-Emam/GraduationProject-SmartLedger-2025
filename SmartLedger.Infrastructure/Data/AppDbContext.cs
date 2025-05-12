@@ -20,15 +20,21 @@ namespace SmartLedger.Infrastructure.Data
 
         public DbSet<User> Users => Set<User>();
 
+        public DbSet<PayrollItem> PayrollItems => Set<PayrollItem>();
+
         public EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
        => base.Entry(entity);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new JournalEntryConfiguration());
-            modelBuilder.ApplyConfiguration(new AccountConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfigurations());
+            //modelBuilder.ApplyConfiguration(new JournalEntryConfiguration());
+            //modelBuilder.ApplyConfiguration(new AccountConfiguration());
+            //modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            //modelBuilder.ApplyConfiguration(new UserConfigurations());
+            //modelBuilder.ApplyConfiguration(new PayrollItemConfigurations());
+
+            // OCP Principal
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
         }
     }
 }

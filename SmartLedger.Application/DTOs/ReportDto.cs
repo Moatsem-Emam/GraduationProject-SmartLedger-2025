@@ -11,9 +11,8 @@ namespace SmartLedger.Application.DTOs
     {
         public long AccountId { get; set ; }
         public string? AccountName { get; set ; }
-        public long DebitAmount { get; set; }
-        public long CreditAmount { get; set; }
-        public List<long> AllDebits { get; set; }
-        public List<long> AllCredits { get; set; }
+
+        public long EarningsAmount { get; set; }
+        public long DeductionsAmount { get; set; }
     }
 }

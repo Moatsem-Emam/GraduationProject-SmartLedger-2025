@@ -17,6 +17,7 @@ namespace SmartLedger.Application.Interfaces.IAppDb
         DbSet<Account> Accounts { get; }
         DbSet<Category> Categories { get; }
         DbSet<User> Users { get; }
+        DbSet<PayrollItem> PayrollItems { get; }
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 

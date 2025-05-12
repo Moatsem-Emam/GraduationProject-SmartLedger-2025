@@ -10,7 +10,7 @@
   <Identity
     Name="c54be700-0011-4892-aa7d-262f7375a874"
     Publisher="CN=hikal"
-    Version="1.0.0.0" />
+    Version="1.0.4.0" />
 
   <mp:PhoneIdentity PhoneProductId="c54be700-0011-4892-aa7d-262f7375a874" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

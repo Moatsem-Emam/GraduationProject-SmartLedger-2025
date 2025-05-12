@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartLedger.Application.Interfaces.IDTOs
 {
-    public interface IJournalEntryDetailDto
+    public interface IAmount
     {
-        long AccountId { get; set; }
-        public string AccountName { get; set; } 
-
-
-        
+        long DebitAmount { get; set; }
+        long CreditAmount { get; set; }
     }
 }
