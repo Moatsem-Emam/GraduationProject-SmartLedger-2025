@@ -173,7 +173,7 @@
                    Margin="0,0,0,30"/>
 
         <!-- البحث -->
-        <Border Grid.Row="1" Background="White" CornerRadius="15" Padding="15" Margin="0,0,0,20" BorderBrush="#E0E0E0" BorderThickness="1" >
+        <Border Grid.Row="1" Background="GhostWhite" CornerRadius="15" Padding="15" Margin="0,0,0,20" BorderBrush="#E0E0E0" BorderThickness="1" >
             <StackPanel x:Name="InputStack" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <TextBlock Text="🔍 بحث:" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold" Foreground="#333"/>

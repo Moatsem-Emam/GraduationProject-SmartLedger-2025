@@ -9,7 +9,7 @@
     FlowDirection="RightToLeft"
     Background="Transparent">
 
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#2A0A73" Offset="0"/>
@@ -83,7 +83,7 @@
 
                 <!-- Export Button -->
                 <Button Content="تصدير PDF" 
-                        Command="{Binding ExportToPdfCommand}" 
+                        Click="ExportToPdfAsync"
                         HorizontalAlignment="Left" 
                         Padding="15,8" 
                         FontSize="16"

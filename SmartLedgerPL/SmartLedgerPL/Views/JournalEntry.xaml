@@ -32,7 +32,7 @@
                    HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
         <!-- بطاقة البيانات -->
-        <Border Grid.Row="2" Background="White" CornerRadius="15" Padding="25" 
+        <Border Grid.Row="2" Background="GhostWhite" CornerRadius="15" Padding="25" 
                 Margin="0,0,0,20" BorderBrush="#E0E0E0" BorderThickness="1" 
                  MaxWidth="1400">
             <StackPanel Spacing="25">

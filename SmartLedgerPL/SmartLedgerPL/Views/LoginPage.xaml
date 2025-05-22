@@ -47,7 +47,7 @@
             <StackPanel VerticalAlignment="Center" Spacing="15">
                 <Ellipse Width="100" Height="100" Margin="0,0,0,20">
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="ms-appx:///Assets/Images/SmartLedger_Light.png" />
+                        <ImageBrush ImageSource="ms-appx:///Assets/Images/SmartLedger_Light_Welcome.png" />
                     </Ellipse.Fill>
                 </Ellipse>
 

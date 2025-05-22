@@ -35,11 +35,14 @@ namespace SmartLedgerPL.ViewModels
         [ObservableProperty]
         private long total;
 
-        //[ObservableProperty]
-        //private List<long> allDebits;
+        [ObservableProperty]
+        private string name;
 
-        //[ObservableProperty]
-        //private List<long> allCredits;
+        [ObservableProperty]
+        private string desc;
+
+        [ObservableProperty]
+        private string categoryName;
 
         [ObservableProperty]
         private ObservableCollection<ReportDto> deductions;
@@ -62,7 +65,9 @@ namespace SmartLedgerPL.ViewModels
             {
                 //if (entry.Details is null) return;
                 SelectedJournal = entry;
-
+                Name = entry.Name;
+                Desc = entry.Description;
+                CategoryName = entry.CategoryName;
                 // Load JournalEntryDetails from DB if needed
                 //(AllCredits, AllDebits, TotalCredit, TotalDebit) = _helper.GetDebitCreditSums(entry.Details);
                 // قائمة الاستحقاقات 
