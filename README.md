@@ -7,7 +7,12 @@
 
 A modern, feature-rich desktop application for managing personal and small business financial records. Built with WinUI 3 and following clean architecture principles, SmartLedger provides an intuitive interface for comprehensive financial management.
 
-![SmartLedger Screenshot](docs/screenshot.png)
+![Screenshot 2025-05-23 232457](https://github.com/user-attachments/assets/8c1f6206-4ca1-4e01-8cea-6e29bb9ef261)
+![Screenshot 2025-05-23 232007](https://github.com/user-attachments/assets/be361385-2a46-4ff5-82a2-bd0f29e078a7)
+![Screenshot 2025-05-23 231753](https://github.com/user-attachments/assets/2048a293-c9d1-4c70-84f5-0e0a75199d41)
+![Screenshot 2025-05-23 232115](https://github.com/user-attachments/assets/f8751463-818b-408e-bf11-4ee06e4cbc87)
+![Screenshot 2025-05-23 232308](https://github.com/user-attachments/assets/3ce1e073-d1f9-4761-baaa-501148c08c7b)
+
 
 ## ✨ Features
 
@@ -88,8 +93,6 @@ cd SmartLedger
    - Open SQL Server Management Studio (SSMS)
    - Copy your server name (e.g., `DESKTOP-ABC123\SQLEXPRESS`)
    
-   ![Server Name Example](docs/sqlserver-connection.png)
-
 3. **Update Configuration**:
    - Open `SmartLedger.Infrastructure/appsettings.json`
    - Replace the connection string:
@@ -106,15 +109,11 @@ cd SmartLedger
 1. **Set Migration Project as Startup**:
    - Right-click `SmartLedger.Migrator` → "Set as Startup Project"
    
-   ![Set Startup Project](docs/set-startup-project.png)
-
 2. **Run Migrations**:
    - Open Package Manager Console: `Tools` → `NuGet Package Manager` → `Package Manager Console`
    - Set default project to `SmartLedger.Infrastructure`
    - Execute: `Update-Database`
    
-   ![Package Manager Console](docs/package-manager-console.png)
-
 ### 4. Build and Run
 
 1. **Set Presentation Layer as Startup**:
@@ -311,9 +310,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support & Contact
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/Moatsem-Emam/GraduationProject-SmartLedger-2025/issues)
-- **Discussions**: [Community discussions](https://github.com/Moatsem-Emam/GraduationProject-SmartLedger-2025/discussions)
-- **Email**: [your.email@example.com](mailto:your.email@example.com)
+- **Email**: [motsememamhussain@gmail.com](mailto:your.email@example.com)
 
 ---
 
