@@ -49,9 +49,9 @@ SmartLedger is a modern desktop application for managing personal or small busin
    3.3
     Go to solution then set the SmartLedger.Migrator as Startup Project.
    ![Screenshot 2025-05-24 010319](https://github.com/user-attachments/assets/2eaae327-e2b5-4bef-ad86-513e710eb8fc)
-    Set SmartLedger.Infrastructure as default project.
+   Go to tools => NuGet Package Manager => Package Manager Console.
    ![Screenshot 2025-05-24 010401](https://github.com/user-attachments/assets/4f2cd7e5-d754-4f4b-9012-18c39dc409c4)
-
+    Set SmartLedger.Infrastructure as default project then update database.
    ![image](https://github.com/user-attachments/assets/6ba0ed32-cc5c-40b0-84df-e09b7059a89e)
 
    
@@ -61,13 +61,6 @@ SmartLedger is a modern desktop application for managing personal or small busin
 
 6. **Run the app**:  
    Press `F5` to build and run the application.
-
----
-
-## 🔄 Configuration
-
-- Connection strings are in `SmartLedger.Migrator/appsettings.json`.
-- Update them to point to a valid SQLite or SQL Server DB as needed.
 
 ---
 
@@ -85,15 +78,6 @@ SmartLedger is a modern desktop application for managing personal or small busin
 - **Database Issues**:
   - Delete `bin` and `obj` folders then rebuild.
   - Ensure `AppDbContext` is properly configured.
-
----
-
-## 📦 Pre-built Executables (Optional)
-
-> If you provide ready-to-run `.exe` files, place them under `/exe` and update this section.
-
-1. Download latest `.zip` from [Releases](https://github.com/your-username/SmartLedger/releases)
-2. Extract and run `SmartLedgerPL.exe`.
 
 ---
 
