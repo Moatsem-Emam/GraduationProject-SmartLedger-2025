@@ -78,13 +78,6 @@ cd SmartLedger
 
 ### 2. Database Setup
 
-#### Option A: Automatic Setup (Recommended)
-1. Run the setup script:
-   ```powershell
-   ./scripts/setup-database.ps1
-   ```
-
-#### Option B: Manual Setup
 1. **Install SQL Server Express**:
    - Download from [Microsoft SQL Server Downloads](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
    - Watch this [3-minute setup guide](https://youtu.be/FFp5BLoQLAA?si=k_47y0cCnJIdha0X)
