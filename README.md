@@ -84,7 +84,7 @@ cd SmartLedger
 
 2. **Configure Connection String**:
    - Open SQL Server Management Studio (SSMS)
-   - Copy your server name (e.g., `DESKTOP-ABC123\SQLEXPRESS`)
+   - Copy your server name (e.g., `DESKTOP-ABC123\SQLEXPRESS`) Or take this without using SSMS (`.\SQLEXPRESS`)
    
 3. **Update Configuration**:
    - Open `SmartLedger.Infrastructure/appsettings.json`
