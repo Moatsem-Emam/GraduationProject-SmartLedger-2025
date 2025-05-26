@@ -18,13 +18,6 @@ A modern, feature-rich desktop application for managing personal and small busin
 - **🎨 Modern UI**: Clean, responsive interface built with WinUI 3
 - **📱 Touch-Friendly**: Optimized for both mouse and touch interactions
 
--
-[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/)
-[![WinUI 3](https://img.shields.io/badge/WinUI-3.0-purple.svg)](https://docs.microsoft.com/en-us/windows/apps/winui/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-
-
 ## 📸 Screenshots
 
 ![Screenshot 2025-05-23 232457](https://github.com/user-attachments/assets/8c1f6206-4ca1-4e01-8cea-6e29bb9ef261)
