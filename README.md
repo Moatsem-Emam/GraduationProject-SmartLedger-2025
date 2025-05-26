@@ -1,4 +1,9 @@
 # 📊 SmartLedger
+[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/)
+[![WinUI 3](https://img.shields.io/badge/WinUI-3.0-purple.svg)](https://docs.microsoft.com/en-us/windows/apps/winui/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+
 
 A modern, feature-rich desktop application for managing personal and small business financial records. Built with WinUI 3 and following clean architecture principles, SmartLedger provides an intuitive interface for comprehensive financial management.
 
