@@ -1,18 +1,6 @@
 # 📊 SmartLedger
 
-[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/)
-[![WinUI 3](https://img.shields.io/badge/WinUI-3.0-purple.svg)](https://docs.microsoft.com/en-us/windows/apps/winui/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-
 A modern, feature-rich desktop application for managing personal and small business financial records. Built with WinUI 3 and following clean architecture principles, SmartLedger provides an intuitive interface for comprehensive financial management.
-
-![Screenshot 2025-05-23 232457](https://github.com/user-attachments/assets/8c1f6206-4ca1-4e01-8cea-6e29bb9ef261)
-![Screenshot 2025-05-23 232007](https://github.com/user-attachments/assets/be361385-2a46-4ff5-82a2-bd0f29e078a7)
-![Screenshot 2025-05-23 231753](https://github.com/user-attachments/assets/2048a293-c9d1-4c70-84f5-0e0a75199d41)
-![Screenshot 2025-05-23 232115](https://github.com/user-attachments/assets/f8751463-818b-408e-bf11-4ee06e4cbc87)
-![Screenshot 2025-05-23 232308](https://github.com/user-attachments/assets/3ce1e073-d1f9-4761-baaa-501148c08c7b)
-
 
 ## ✨ Features
 
@@ -24,6 +12,22 @@ A modern, feature-rich desktop application for managing personal and small busin
 - **🔒 Secure Storage**: Local database with optional encryption
 - **🎨 Modern UI**: Clean, responsive interface built with WinUI 3
 - **📱 Touch-Friendly**: Optimized for both mouse and touch interactions
+
+-
+[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/)
+[![WinUI 3](https://img.shields.io/badge/WinUI-3.0-purple.svg)](https://docs.microsoft.com/en-us/windows/apps/winui/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+
+
+## 📸 Screenshots
+
+![Screenshot 2025-05-23 232457](https://github.com/user-attachments/assets/8c1f6206-4ca1-4e01-8cea-6e29bb9ef261)
+![Screenshot 2025-05-23 232007](https://github.com/user-attachments/assets/be361385-2a46-4ff5-82a2-bd0f29e078a7)
+![Screenshot 2025-05-23 231753](https://github.com/user-attachments/assets/2048a293-c9d1-4c70-84f5-0e0a75199d41)
+![Screenshot 2025-05-23 232115](https://github.com/user-attachments/assets/f8751463-818b-408e-bf11-4ee06e4cbc87)
+![Screenshot 2025-05-23 232308](https://github.com/user-attachments/assets/3ce1e073-d1f9-4761-baaa-501148c08c7b)
+
 
 ## 🏗️ Architecture
 
