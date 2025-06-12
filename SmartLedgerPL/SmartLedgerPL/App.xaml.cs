@@ -72,20 +72,21 @@ namespace SmartLedgerPL
             _helper = AppHost.Services.GetRequiredService<HelperUtilities>();
 
             InitializeComponent();
+
         }
 
         private void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
             // DB Config
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString(name: "DefaultConnection")));
             // Seeding Data
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<ISeeder, UserSeeding>();
             services.AddScoped<ISeeder, CategorySeeding>();
             services.AddScoped<ISeeder, PayrollItemSeeding>();
             services.AddScoped<ISeeder, AccountSeeding>();
-            //services.AddScoped<ISeeder, JournalEntrySeeding>();
+            services.AddScoped<ISeeder, JournalEntrySeeding>();
 
             // Unit Of Work
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -116,7 +117,7 @@ namespace SmartLedgerPL
         }
 
         public static MainWindow MainWindow { get; private set; } // Store main window reference
-                                                                  // أضف هذا السطر داخل الكلاس MainWindow
+                                                                 
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -126,7 +127,6 @@ namespace SmartLedgerPL
         public NavigationView NavView => MainWindow.NavViewPublic;
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-
             using (var scope = AppHost.Services.CreateScope())
             {
                 var dbInit = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
@@ -135,6 +135,8 @@ namespace SmartLedgerPL
             }
             MainWindow = new MainWindow();
             MainWindow.Activate();
+            NavView.IsBackEnabled = false;
+            NavView.IsSettingsVisible = false;
 
             // ✅ التنقل لأول مرة 
             MainWindow.ContentFramePublic.Navigate(typeof(LoginPage));

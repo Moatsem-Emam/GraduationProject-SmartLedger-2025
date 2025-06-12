@@ -111,13 +111,6 @@ namespace SmartLedgerPL
                 }
             }
 
-            // تفعيل زر تسجيل الخروج
-            //var logoutItem = NavView.MenuItems
-            //    .OfType<NavigationViewItem>()
-            //    .FirstOrDefault(i => (string)i.Content == "تسجيل الخروج");
-
-            //if (logoutItem != null)
-            //    logoutItem.IsEnabled = isLoggedIn;
         }
 
         private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)

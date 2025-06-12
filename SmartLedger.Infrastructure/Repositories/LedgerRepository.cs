@@ -73,7 +73,6 @@ namespace SmartLedger.Infrastructure.Repositories
                 UpdatedAt = DateTime.UtcNow
             };
 
-            //entry.UpdatedAt = DateTime.UtcNow;
 
             // Attach the passed entity ONLY IF NOT TRACKED
             var local = _context.JournalEntries.Local.FirstOrDefault(e => e.Id == entry.Id);
@@ -88,7 +87,6 @@ namespace SmartLedger.Infrastructure.Repositories
 
             _context.Entry(AttachedEntry).Property(e => e.Name).IsModified = true;
             _context.Entry(AttachedEntry).Property(e => e.Description).IsModified = true;
-            //_context.Entry(AttachedEntry).Property(e => e.Category).IsModified = true;
             _context.Entry(AttachedEntry).Property(e => e.CategoryId).IsModified = true;
             _context.Entry(AttachedEntry).Property(e => e.UpdatedAt).IsModified = true;
         }
@@ -105,4 +103,4 @@ namespace SmartLedger.Infrastructure.Repositories
         }
     }
 }
-//await _context.JournalEntries.CountAsync() / 15
+

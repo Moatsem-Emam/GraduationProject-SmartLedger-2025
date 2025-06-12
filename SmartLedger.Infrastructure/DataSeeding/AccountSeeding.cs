@@ -1,4 +1,5 @@
-﻿using SmartLedger.Application.Interfaces.IAppDb;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartLedger.Application.Interfaces.IAppDb;
 using SmartLedger.Application.Interfaces.IDataSeeding;
 using SmartLedger.Domain.Entities;
 using System;
@@ -12,9 +13,9 @@ namespace SmartLedger.Infrastructure.DataSeeding
     public class AccountSeeding : JsonSeeder<Account>
     {
         protected override string GetFileName() => "Accounts.json";
-        protected override Task<bool> ExistsAsync(IAppDbContext context)
-            => Task.FromResult(context.Accounts.Any());
-        protected override Task AddRangeAsync(IAppDbContext context, List<Account> items)
-            => context.Accounts.AddRangeAsync(items);
+        protected override async Task<bool> ExistsAsync(IAppDbContext context)
+            => await(context.Accounts.AnyAsync());
+        protected override async Task AddRangeAsync(IAppDbContext context, List<Account> items)
+            => await context.Accounts.AddRangeAsync(items);
     }
 }

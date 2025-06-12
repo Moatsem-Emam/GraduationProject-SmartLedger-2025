@@ -1,8 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MediatR;
-using Microsoft.Data.SqlClient;
-using Microsoft.Identity.Client;
 using Microsoft.UI.Xaml.Controls;
 
 using Microsoft.UI.Xaml;
@@ -13,25 +10,16 @@ using SmartLedger.Application.Interfaces.IServices;
 using SmartLedger.Domain.Common;
 using SmartLedger.Domain.Entities;
 using SmartLedger.Domain.ValueObjects;
-using SmartLedger.Infrastructure.Services;
 using SmartLedgerPL.Helpers;
 using SmartLedgerPL.Views;
 
 
 //using SmartLedgerPL.Commands;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using JournalEntry = SmartLedger.Domain.Entities.JournalEntry;
 
 namespace SmartLedgerPL.ViewModels
@@ -277,6 +265,7 @@ namespace SmartLedgerPL.ViewModels
 
                 NavView.SelectedItem = item;
             }
+            else IsSaveEnabled = true;
             return;
         }
 

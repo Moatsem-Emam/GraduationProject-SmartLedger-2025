@@ -20,22 +20,10 @@ namespace SmartLedger.Infrastructure.Services
         {
             var accounts = await _unitOfWork.AccountRepository.GetAllPaginatedAsync();
             return accounts;
-            //return accounts.Select(a => new Account
-            //{
-            //    CreatedAt = a.CreatedAt,
-            //    AccountName = a.AccountName,
-            //    Details = a.Details.Select(d => new JournalEntryDetail
-            //    {
-            //        Id = d.Id,
-            //        DebitAmount = d.DebitAmount,
-            //        CreditAmount = d.CreditAmount
-            //    }).ToList()
-            //}).ToList();
         }
         public async Task<Account?> GetAccountByIdAsync(int accountId)
         {
             return await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
-
         }
         public async Task SaveAccount()
         {

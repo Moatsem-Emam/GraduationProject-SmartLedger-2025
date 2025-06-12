@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartLedger.Domain.Entities
+﻿namespace SmartLedger.Domain.Entities
 {
     public class JournalEntryDetail : BaseEntity.BaseEntity<long>
     {

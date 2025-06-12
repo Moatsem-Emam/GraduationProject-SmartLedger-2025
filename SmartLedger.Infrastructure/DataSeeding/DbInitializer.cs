@@ -1,4 +1,5 @@
-﻿using SmartLedger.Application.Interfaces.IDataSeeding;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartLedger.Application.Interfaces.IDataSeeding;
 using SmartLedger.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace SmartLedger.Infrastructure.DataSeeding
 
         public async Task InitializeAsync()
         {
-            await _context.Database.EnsureCreatedAsync(); // or MigrateAsync() if supported
+            await _context.Database.MigrateAsync(); // or MigrateAsync() if supported
 
             foreach (var seeder in _seeders)
             {

@@ -32,6 +32,7 @@ namespace SmartLedgerPL.ViewModels
 
         [ObservableProperty]
         private bool isLoggingIn;
+        public NavigationView NavView => App.MainWindow.NavViewPublic;
 
         public LoginViewModel(IAuthService authService, INavigationService navigationService, HelperUtilities helper)
         {
@@ -39,9 +40,10 @@ namespace SmartLedgerPL.ViewModels
             _navigationService = navigationService;
             _helper = helper;
             LoginCommand = new AsyncRelayCommand(Login);
+            NavView.IsBackEnabled = false;
+
         }
 
-        public NavigationView NavView => App.MainWindow.NavViewPublic;
         private async Task Login()
         {
             IsLoggingIn = true; // Start spinner
@@ -57,14 +59,16 @@ namespace SmartLedgerPL.ViewModels
 
                     // تحديث MainWindow.NavigationView حسب الدور
                     var window = (MainWindow)App.MainWindow;
-                    await window.UpdateNavViewByRoleAsync();
-                    await Task.Delay(2000);
                     // Navigate
                     if (user.Role == "Admin")
                     {
                         window.ContentFramePublic.Navigate(typeof(ReportPage));
                         // عشان نفوكس علي الحاجة اللي اتنقلنا ليها
                         _helper.FocusOn("ReportPage");
+                        NavView.IsBackEnabled = true;
+                        await Task.Delay(1000);
+                        await window.UpdateNavViewByRoleAsync();
+
 
                     }
                     //else

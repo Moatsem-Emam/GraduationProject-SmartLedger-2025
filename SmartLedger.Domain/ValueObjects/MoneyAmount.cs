@@ -13,10 +13,12 @@ namespace SmartLedger.Domain.ValueObjects
         public MoneyAmount(string? input)
         {
             
-            if (!string.IsNullOrWhiteSpace(input) & !long.TryParse(input, out long value))
-            {
+            if (!string.IsNullOrWhiteSpace(input) & !long.TryParse(input, out long value)) 
                 throw new ArgumentException("المبلغ غير صالح، يجب أن يكون رقمًا.");
-            }
+            if (value < 0) 
+                throw new ArgumentException("المبلغ غير صالح، يجب أن يكون رقمًا ايجابي.");
+
+           
 
             Value = value;
         }

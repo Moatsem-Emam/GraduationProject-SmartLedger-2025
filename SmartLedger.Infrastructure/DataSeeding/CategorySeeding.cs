@@ -11,7 +11,7 @@ namespace SmartLedger.Infrastructure.DataSeeding
 {
     public class CategorySeeding : JsonSeeder<Category>
     {
-        protected override string GetFileName() => "categories.json";
+        protected override string GetFileName() => "Categories.json";
         protected override Task<bool> ExistsAsync(IAppDbContext context)
             => Task.FromResult(context.Categories.Any());
         protected override Task AddRangeAsync(IAppDbContext context, List<Category> items)

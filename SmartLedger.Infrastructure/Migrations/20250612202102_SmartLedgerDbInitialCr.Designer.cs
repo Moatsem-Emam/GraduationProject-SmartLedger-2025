@@ -12,8 +12,8 @@ using SmartLedger.Infrastructure.Data;
 namespace SmartLedger.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250511235553_InitialDbCreate")]
-    partial class InitialDbCreate
+    [Migration("20250612202102_SmartLedgerDbInitialCr")]
+    partial class SmartLedgerDbInitialCr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

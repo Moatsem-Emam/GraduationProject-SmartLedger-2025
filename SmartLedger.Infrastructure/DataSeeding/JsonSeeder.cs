@@ -18,7 +18,7 @@ namespace SmartLedger.Infrastructure.DataSeeding
             if (!File.Exists(path)) return;
 
             var json = await File.ReadAllTextAsync(path);
-            var data = JsonSerializer.Deserialize<List<T>>(json, new JsonSerializerOptions
+            var data = JsonSerializer.Deserialize<List<T>>(json, options: new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
