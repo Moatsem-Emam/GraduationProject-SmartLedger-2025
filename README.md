@@ -78,6 +78,13 @@ git clone https://github.com/Moatsem-Emam/GraduationProject-SmartLedger-2025.git
 cd SmartLedger
 ```
 
+### 2. Configuration Manager
+```bash
+   **Build => Configuration Manager**
+![Screenshot 2025-06-14 095759](https://github.com/user-attachments/assets/82b30224-b123-4344-8841-524628bd1ba8)
+
+```
+
 ### 2. Database Setup
 
 1. **Install SQL Server Express**:
@@ -89,7 +96,7 @@ cd SmartLedger
    - Copy your server name (e.g., `DESKTOP-ABC123\SQLEXPRESS`) Or take this without using SSMS (`.\SQLEXPRESS`)
    
 3. **Update Configuration**:
-   - Open `SmartLedger.Infrastructure/appsettings.json`
+   - Open `SmartLedger.Migrator/appsettings.json`
    - Replace the connection string:
    ```json
    {
@@ -213,6 +220,28 @@ dotnet restore
 dotnet clean
 dotnet build
 ```
+
+#### Missing `appsettings.json` File
+
+**Issue:**  
+When running the application or database migrator, you may encounter an error indicating that `appsettings.json` is missing from a specific path.
+
+**Solution:**
+
+```bash
+# 1. Check the error message to find the expected path
+# Example error:
+# Could not find file '/path/to/project/bin/Debug/net8.0/appsettings.json'
+
+# 2. Navigate to the SmartLedger.Migrator directory
+cd /path/to/SmartLedger.Migrator/
+
+# 3. Copy the appsettings.json file to the required location
+cp appsettings.json /path/to/project/bin/Debug/net8.0/appsettings.json
+
+# 4. Run the application or migrator again
+dotnet run --project SmartLedger.Migrator
+
 
 #### Database Connection Issues
 - Verify SQL Server is running
