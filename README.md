@@ -79,11 +79,9 @@ cd SmartLedger
 ```
 
 ### 2. Configuration Manager
-```bash
+
    **Build => Configuration Manager**
 ![Screenshot 2025-06-14 095759](https://github.com/user-attachments/assets/82b30224-b123-4344-8841-524628bd1ba8)
-
-```
 
 ### 2. Database Setup
 
@@ -228,7 +226,7 @@ When running the application or database migrator, you may encounter an error in
 
 **Solution:**
 
-```bash
+
 # 1. Check the error message to find the expected path
 # Example error:
 # Could not find file '/path/to/project/bin/Debug/net8.0/appsettings.json'
